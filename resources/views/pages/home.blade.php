@@ -21,13 +21,26 @@
         <div class="hero-overlay"></div>
 
         <div class="hero-content">
-            <h1 class="hero-title">The Lost Compass</h1>
-            <p class="hero-subtitle">Choose your fate upon the Seven Seas</p>
+            @if($isLoggedIn)
+                <h1 class="hero-title">The Lost Compass</h1>
+                <p class="hero-subtitle">{{ $greeting }}</p>
 
-            <div class="hero-buttons">
-                <button class="btn btn-primary" id="begin-voyage-btn">Begin Voyage</button>
-                <button class="btn btn-secondary" id="discover-fate-btn">Explore the Seas</button>
-            </div>
+                <div class="hero-buttons">
+                    @if($continueMission)
+                        <a href="{{ url('/missions') }}" class="btn btn-primary" id="continue-voyage-btn" style="text-decoration: none;">Continue Voyage: {{ $continueMission->title }}</a>
+                    @endif
+                    <a href="{{ $ctaLink }}" class="btn btn-primary" id="begin-voyage-btn" style="text-decoration: none;">{{ $ctaText }}</a>
+                    <a href="{{ url('/profile') }}" class="btn btn-secondary" id="view-profile-btn" style="text-decoration: none;">Captain's Cabin</a>
+                </div>
+            @else
+                <h1 class="hero-title">The Lost Compass</h1>
+                <p class="hero-subtitle">{{ $greeting }}</p>
+
+                <div class="hero-buttons">
+                    <a href="{{ $ctaLink }}" class="btn btn-primary" id="begin-voyage-btn" style="text-decoration: none;">{{ $ctaText }}</a>
+                    <a href="{{ url('/quiz') }}" class="btn btn-secondary" id="discover-fate-btn" style="text-decoration: none;">Explore the Seas</a>
+                </div>
+            @endif
         </div>
     </section>
 
@@ -40,11 +53,19 @@
                 </div>
             </div>
             <div class="welcome-content reveal-on-scroll">
-                <h2>Step Into Legend</h2>
-                <p>
-                    The Lost Compass is not merely a place—it's a world where the impossible becomes reality.
-                    Where cursed treasures gleam in moonlit waters, and legendary captains command the seven seas.
-                </p>
+                @if($isLoggedIn)
+                    <h2>Your Legend Continues</h2>
+                    <p>
+                        Captain {{ $pirateName }}, the seas grow restless. Your rank of <strong>{{ $pirateRank }}</strong> precedes you,
+                        and whispers of your exploits echo across every port. The compass still points true — where will it lead you next?
+                    </p>
+                @else
+                    <h2>Step Into Legend</h2>
+                    <p>
+                        The Lost Compass is not merely a place—it's a world where the impossible becomes reality.
+                        Where cursed treasures gleam in moonlit waters, and legendary captains command the seven seas.
+                    </p>
+                @endif
                 <ul>
                     <li>Discover ancient pirate legends</li>
                     <li>Uncover cursed treasures and relics</li>
@@ -61,11 +82,10 @@
         </div>
     </section>
 
-    {{-- Features / Preview Cards Section --}}
+    {{-- Features / Preview Cards Section (Dynamic from DB) --}}
     <section class="features-section" id="features-v3" style="position: relative; overflow: hidden;">
         <h2 class="section-title reveal-on-scroll">Explore Our World</h2>
         <div class="features-container-v3" style="position: relative; z-index: 2;">
-            {{-- Feature Card 1: Characters --}}
             <div class="feature-card-v3 reveal-on-scroll">
                 <div class="feature-image-v3">
                     <img src="{{ asset('assets/images/home/551567-1920x1080-desktop-1080p-will-turner-pirates-of-the-caribbean-background-photo.jpg') }}" alt="Meet the Captains">
@@ -80,8 +100,6 @@
                     <a href="{{ url('/characters') }}" class="feature-link">Explore Characters →</a>
                 </div>
             </div>
-
-            {{-- Feature Card 2: Ships --}}
             <div class="feature-card-v3 reveal-on-scroll">
                 <div class="feature-image-v3">
                     <img src="{{ asset('assets/images/home/f9006df007e36bc5e6931a31ff420a9db7b1ef3da2ea876ebe9f7f26688bac76._SX1080_FMjpg_.jpg') }}" alt="Legendary Ships">
@@ -96,8 +114,6 @@
                     <a href="{{ url('/ships') }}" class="feature-link">View Ships →</a>
                 </div>
             </div>
-
-            {{-- Feature Card 3: Missions --}}
             <div class="feature-card-v3 reveal-on-scroll">
                 <div class="feature-image-v3">
                     <img src="{{ asset('assets/images/home/5d293ce66407ed52f19a20b8680bb319.jpg') }}" alt="Treasure Missions">
@@ -114,6 +130,34 @@
             </div>
         </div>
     </section>
+
+    {{-- Featured Missions Section (Dynamic from DB) --}}
+    @if($featuredMissions->count() > 0)
+    <section class="features-section" id="featured-missions-v3" style="position: relative; overflow: hidden; margin-top: 40px;">
+        <h2 class="section-title reveal-on-scroll">Featured Missions</h2>
+        <div class="features-container-v3" style="position: relative; z-index: 2;">
+            @foreach($featuredMissions as $mission)
+                <div class="feature-card-v3 reveal-on-scroll">
+                    <div class="feature-image-v3">
+                        @if($mission->image)
+                            <img src="{{ asset($mission->image) }}" alt="{{ $mission->title }}">
+                        @else
+                            <img src="{{ asset('assets/images/home/5d293ce66407ed52f19a20b8680bb319.jpg') }}" alt="{{ $mission->title }}">
+                        @endif
+                        <div class="feature-overlay-gradient"></div>
+                    </div>
+                    <div class="feature-content-v3">
+                        <h3 class="feature-title-v3">{{ $mission->title }}</h3>
+                        <p class="feature-text-v3">
+                            {{ $mission->description ?? 'Embark on this dangerous quest and claim your reward.' }}
+                        </p>
+                        <a href="{{ url('/missions') }}" class="feature-link">Accept Quest →</a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </section>
+    @endif
 
     {{-- Captain's Log Highlights --}}
     <section class="voyage-highlights" id="highlights">
@@ -169,7 +213,7 @@
         </div>
     </section>
 
-    {{-- Quote Section --}}
+    {{-- Quote Section (Dynamic from DB) --}}
     <section class="quote-section-v3" id="quote-v3" style="position: relative; overflow: hidden;">
         <img
             src="{{ asset('assets/images/home/Moonlit ocean background.png') }}"
@@ -183,30 +227,28 @@
         </div>
         <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(8,20,35,0.62) 0%, rgba(11,31,51,0.75) 100%); z-index:1; pointer-events:none;"></div>
         <div class="quote-container-v3" style="position: relative; z-index: 2;">
-            <div class="quote-item-v3 active" data-character="Jack Sparrow">
-                <p class="quote-text-v3">"Not all treasure is silver and gold, mate."</p>
-                <p class="quote-author-v3">— Captain Jack Sparrow</p>
-            </div>
-            <div class="quote-item-v3" data-character="Davy Jones">
-                <p class="quote-text-v3">"Do you fear death? Do you fear that dark abyss?"</p>
-                <p class="quote-author-v3">— Davy Jones</p>
-            </div>
-            <div class="quote-item-v3" data-character="Barbossa">
-                <p class="quote-text-v3">"The problem is not the problem. The problem is your attitude about the problem."</p>
-                <p class="quote-author-v3">— Captain Barbossa</p>
-            </div>
-            <div class="quote-item-v3" data-character="Will Turner">
-                <p class="quote-text-v3">"One day you will find yourself lost. You will have nothing and nowhere to go."</p>
-                <p class="quote-author-v3">— Will Turner</p>
-            </div>
-            <div class="quote-item-v3" data-character="Elizabeth Swann">
-                <p class="quote-text-v3">"The problem is I'm dishonest, and a dishonest woman you can always trust to be dishonest."</p>
-                <p class="quote-author-v3">— Elizabeth Swann</p>
-            </div>
-            <div class="quote-item-v3" data-character="Jack Sparrow">
-                <p class="quote-text-v3">"Gentlemen, milady... you will always remember this as the day you almost caught Captain Jack Sparrow."</p>
-                <p class="quote-author-v3">— Captain Jack Sparrow</p>
-            </div>
+            @if($allQuotes->count() > 0)
+                @foreach($allQuotes as $index => $q)
+                    <div class="quote-item-v3 {{ $index === 0 ? 'active' : '' }}" data-character="{{ $q->speaker }}">
+                        <p class="quote-text-v3">"{{ $q->quote }}"</p>
+                        <p class="quote-author-v3">— {{ $q->speaker }}</p>
+                    </div>
+                @endforeach
+            @else
+                {{-- Fallback static quotes --}}
+                <div class="quote-item-v3 active" data-character="Jack Sparrow">
+                    <p class="quote-text-v3">"Not all treasure is silver and gold, mate."</p>
+                    <p class="quote-author-v3">— Captain Jack Sparrow</p>
+                </div>
+                <div class="quote-item-v3" data-character="Davy Jones">
+                    <p class="quote-text-v3">"Do you fear death? Do you fear that dark abyss?"</p>
+                    <p class="quote-author-v3">— Davy Jones</p>
+                </div>
+                <div class="quote-item-v3" data-character="Barbossa">
+                    <p class="quote-text-v3">"The problem is not the problem. The problem is your attitude about the problem."</p>
+                    <p class="quote-author-v3">— Captain Barbossa</p>
+                </div>
+            @endif
         </div>
     </section>
 
