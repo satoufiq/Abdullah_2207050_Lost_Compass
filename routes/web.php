@@ -47,6 +47,38 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/ships/{id}/edit', [AdminController::class, 'shipsEdit'])->name('ships.edit');
     Route::put('/ships/{id}', [AdminController::class, 'shipsUpdate'])->name('ships.update');
     Route::delete('/ships/{id}', [AdminController::class, 'shipsDestroy'])->name('ships.destroy');
+
+    // Map Locations CRUD
+    Route::get('/locations', [AdminController::class, 'locationsIndex'])->name('locations.index');
+    Route::get('/locations/create', [AdminController::class, 'locationsCreate'])->name('locations.create');
+    Route::post('/locations', [AdminController::class, 'locationsStore'])->name('locations.store');
+    Route::get('/locations/{id}/edit', [AdminController::class, 'locationsEdit'])->name('locations.edit');
+    Route::put('/locations/{id}', [AdminController::class, 'locationsUpdate'])->name('locations.update');
+    Route::delete('/locations/{id}', [AdminController::class, 'locationsDestroy'])->name('locations.destroy');
+
+    // Missions CRUD
+    Route::get('/missions', [AdminController::class, 'missionsIndex'])->name('missions.index');
+    Route::get('/missions/create', [AdminController::class, 'missionsCreate'])->name('missions.create');
+    Route::post('/missions', [AdminController::class, 'missionsStore'])->name('missions.store');
+    Route::get('/missions/{id}/edit', [AdminController::class, 'missionsEdit'])->name('missions.edit');
+    Route::put('/missions/{id}', [AdminController::class, 'missionsUpdate'])->name('missions.update');
+    Route::delete('/missions/{id}', [AdminController::class, 'missionsDestroy'])->name('missions.destroy');
+
+    // Tavern Rumors CRUD
+    Route::get('/rumors', [AdminController::class, 'rumorsIndex'])->name('rumors.index');
+    Route::get('/rumors/create', [AdminController::class, 'rumorsCreate'])->name('rumors.create');
+    Route::post('/rumors', [AdminController::class, 'rumorsStore'])->name('rumors.store');
+    Route::get('/rumors/{id}/edit', [AdminController::class, 'rumorsEdit'])->name('rumors.edit');
+    Route::put('/rumors/{id}', [AdminController::class, 'rumorsUpdate'])->name('rumors.update');
+    Route::delete('/rumors/{id}', [AdminController::class, 'rumorsDestroy'])->name('rumors.destroy');
+
+    // Tavern Notices CRUD
+    Route::get('/notices', [AdminController::class, 'noticesIndex'])->name('notices.index');
+    Route::get('/notices/create', [AdminController::class, 'noticesCreate'])->name('notices.create');
+    Route::post('/notices', [AdminController::class, 'noticesStore'])->name('notices.store');
+    Route::get('/notices/{id}/edit', [AdminController::class, 'noticesEdit'])->name('notices.edit');
+    Route::put('/notices/{id}', [AdminController::class, 'noticesUpdate'])->name('notices.update');
+    Route::delete('/notices/{id}', [AdminController::class, 'noticesDestroy'])->name('notices.destroy');
 });
 
 // ─── Characters (Dynamic via Controller) ─────────────────────
@@ -69,6 +101,16 @@ Route::get('/api/engine/missions', [App\Http\Controllers\Api\MissionEngineContro
 Route::get('/api/engine/missions/{id}/load', [App\Http\Controllers\Api\MissionEngineController::class, 'loadMission']);
 Route::post('/api/engine/missions/{id}/choice', [App\Http\Controllers\Api\MissionEngineController::class, 'makeChoice']);
 Route::post('/api/engine/missions/{id}/claim', [App\Http\Controllers\Api\MissionEngineController::class, 'claimReward']);
+
+// ─── Tavern API ──────────────────────────────────────────────
+use App\Http\Controllers\Api\TavernController;
+Route::get('/api/tavern/posts', [TavernController::class, 'getPosts']);
+Route::post('/api/tavern/posts', [TavernController::class, 'createPost']);
+Route::post('/api/tavern/posts/{id}/reply', [TavernController::class, 'createComment']);
+Route::post('/api/tavern/posts/{id}/like', [TavernController::class, 'toggleLike']);
+Route::get('/api/tavern/rumors', [TavernController::class, 'getRumors']);
+Route::get('/api/tavern/notices', [TavernController::class, 'getNotices']);
+Route::get('/api/tavern/leaderboard', [TavernController::class, 'getLeaderboard']);
 
 // ─── Content Pages (Frontend-only) ───────────────────────────
 

@@ -37,6 +37,14 @@
             <p class="results-text" id="results-text">Showing 6 legendary records</p>
         </section>
 
+        <section class="quiz-banner" aria-label="Compass of Fate Quiz Banner">
+            <div class="quiz-banner-content">
+                <h2>Compass of Fate</h2>
+                <p>Which legend runs in your blood? Take the test and claim your destiny.</p>
+                <button type="button" class="view-more-btn" id="start-identity-quiz-btn" style="width: auto; padding: 0.8rem 1.5rem; font-size: 0.9rem;">Take the Identity Quiz</button>
+            </div>
+        </section>
+
         <section class="character-gallery" aria-label="Character gallery">
             <div class="decor-rope" aria-hidden="true"></div>
             <div class="decor-compass" aria-hidden="true">
@@ -85,6 +93,35 @@
         </div>
     </section>
 
+    <section class="quiz-modal character-modal" id="identity-quiz-modal" hidden>
+        <div class="modal-backdrop" id="quiz-modal-backdrop"></div>
+        <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="quiz-modal-title">
+            <button class="modal-close" id="quiz-modal-close" type="button" aria-label="Close quiz">&times;</button>
+            
+            <div class="modal-content" style="text-align: center; padding: 2rem;">
+                <p class="modal-record">Identity Detection</p>
+                <h2 id="quiz-modal-title">The Compass Spins...</h2>
+                <div id="quiz-question-container" style="margin-top: 1.5rem;">
+                    <p id="quiz-question-text" style="font-size: 1.2rem; margin-bottom: 1.5rem; color: #f4e4ca;"></p>
+                    <div id="quiz-options-container" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Options injected by JS -->
+                    </div>
+                </div>
+                <div id="quiz-result-container" hidden style="margin-top: 1.5rem;">
+                    <p style="font-size: 1.1rem; color: #c4b5a3;">Your Pirate Identity is...</p>
+                    <h3 id="quiz-result-name" style="font-size: 2rem; color: #d4af37; font-family: 'Cinzel Decorative', serif; margin: 1rem 0;"></h3>
+                    <img id="quiz-result-image" src="" alt="" style="max-width: 200px; border-radius: 8px; border: 2px solid #c9a44c; margin: 0 auto;">
+                    <p id="quiz-result-desc" style="margin: 1rem 0; font-style: italic; color: #f4e4ca;"></p>
+                    <form action="/quiz/identity/submit" method="POST" id="quiz-submit-form">
+                        @csrf
+                        <input type="hidden" name="identity_character" id="identity-input-field">
+                        <button type="submit" class="view-more-btn" style="width: auto; padding: 0.8rem 1.5rem; font-size: 0.9rem; margin-top: 1rem;">Claim Your Destiny (Sign Up)</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer>
         <div class="footer-content">
             <div class="footer-brand">
@@ -102,5 +139,11 @@
 @endsection
 
 @section('scripts')
+    <script>
+        window.dbQuizData = {
+            identity: @json($quizDataArray)
+        };
+    </script>
     <script src="{{ asset('js/characters.js') }}"></script>
+    <script src="{{ asset('js/quiz.js') }}"></script>
 @endsection
