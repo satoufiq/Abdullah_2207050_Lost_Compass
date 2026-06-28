@@ -138,9 +138,10 @@ Route::get('/tavern', function () {
     return view('pages.tavern');
 })->name('tavern');
 
-Route::get('/profile', function () {
-    return view('pages.profile');
-})->name('profile');
+use App\Http\Controllers\ProfileController;
+
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
 Route::get('/quiz', function () {
     $identityQuestions = \App\Models\Question::with('answers')->where('type', 'identity')->inRandomOrder()->limit(10)->get();
