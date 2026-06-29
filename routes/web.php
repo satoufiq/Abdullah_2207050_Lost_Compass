@@ -101,6 +101,7 @@ Route::get('/api/engine/missions', [App\Http\Controllers\Api\MissionEngineContro
 Route::get('/api/engine/missions/{id}/load', [App\Http\Controllers\Api\MissionEngineController::class, 'loadMission']);
 Route::post('/api/engine/missions/{id}/choice', [App\Http\Controllers\Api\MissionEngineController::class, 'makeChoice']);
 Route::post('/api/engine/missions/{id}/claim', [App\Http\Controllers\Api\MissionEngineController::class, 'claimReward']);
+Route::get('/api/engine/history', [App\Http\Controllers\Api\MissionEngineController::class, 'getHistory']);
 
 // ─── Tavern API ──────────────────────────────────────────────
 use App\Http\Controllers\Api\TavernController;
@@ -172,13 +173,28 @@ Route::get('/quiz', function () {
 })->name('quiz');
 
 Route::post('/quiz/identity/submit', function (\Illuminate\Http\Request $request) {
+    if (auth()->check()) {
+        $user = auth()->user();
+        $user->update([
+            'identity_character' => $request->input('identity_character'),
+            'pirate_name' => $request->input('pirate_name'),
+            'role' => $request->input('role'),
+            'relic' => $request->input('relic'),
+            'allegiance' => $request->input('allegiance'),
+            'trait' => $request->input('trait'),
+            'avatar' => $request->input('avatar'),
+        ]);
+        return redirect()->route('profile')->with('status', 'Identity claimed successfully!');
+    }
+
     $request->session()->put('quiz_identity_data', [
         'identity_character' => $request->input('identity_character'),
         'pirate_name' => $request->input('pirate_name'),
         'role' => $request->input('role'),
         'relic' => $request->input('relic'),
         'allegiance' => $request->input('allegiance'),
-        'trait' => $request->input('trait')
+        'trait' => $request->input('trait'),
+        'avatar' => $request->input('avatar')
     ]);
     return redirect()->route('signup')->with('quiz_message', 'The Compass has chosen you. Now claim your destiny.');
 });
