@@ -139,10 +139,16 @@ Route::get('/tavern', function () {
     return view('pages.tavern');
 })->name('tavern');
 
+Route::get('/trivia', function () {
+    return view('pages.trivia');
+})->name('trivia');
+
 use App\Http\Controllers\ProfileController;
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+Route::post('/profile/chest', [ProfileController::class, 'openChest'])->name('profile.chest');
+Route::get('/profile/relic/{id}', [ProfileController::class, 'relicDetails'])->name('profile.relic');
 
 Route::get('/quiz', function () {
     $identityQuestions = \App\Models\Question::with('answers')->where('type', 'identity')->inRandomOrder()->limit(10)->get();
@@ -215,4 +221,37 @@ Route::middleware('auth')->group(function () {
         }
         return redirect()->route('profile')->with('status', 'Weapon claimed successfully!');
     });
+
+    // Profile routes from Breeze
+    // Note: ProfileController exists as App\Http\Controllers\ProfileController already from original
+    // but Breeze might have its own or we can just comment them out if they conflict.
+    // Actually, Breeze added its own ProfileController that handles edit, update, destroy.
+    // Let's add them:
+    Route::get('/breeze-profile', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/breeze-profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/breeze-profile', [\App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Async API endpoint for the dashboard
+    Route::get('/api/pirate-stats', function (Illuminate\Http\Request $request) {
+        $titles = ['Captain', 'First Mate', 'Quartermaster', 'Gunner', 'Navigator', 'Deckhand'];
+        $ships = ['The Black Pearl', 'Queen Anne\'s Revenge', 'The Flying Dutchman', 'The Jolly Roger', 'The Silent Mary'];
+        
+        return response()->json([
+            'bounty' => rand(1000, 500000) . ' Gold Coins',
+            'title' => $titles[array_rand($titles)],
+            'ship' => $ships[array_rand($ships)],
+            'missions_completed' => rand(5, 50),
+            'infamy_level' => rand(1, 100),
+            'last_seen' => 'Tortuga'
+        ]);
+    });
 });
+
+Route::get('/dashboard', function () {
+    if (auth()->user()->isAdmin()) {
+        return redirect()->route('admin.dashboard');
+    }
+    return redirect()->route('profile');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+require __DIR__.'/auth.php';
