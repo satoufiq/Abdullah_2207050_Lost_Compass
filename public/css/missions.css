@@ -1,0 +1,585 @@
+/* ================================================================
+   THE LOST COMPASS — MISSIONS PAGE REDESIGN
+   Full redesign using ms- BEM prefix.
+   ================================================================ */
+
+:root {
+    --ms-gold:        #C9A44C;
+    --ms-gold-light:  #E8C97A;
+    --ms-gold-dim:    rgba(201, 164, 76, 0.45);
+    --ms-dark:        #0A0A0A;
+    --ms-dark-mid:    #161616;
+    --ms-dark-light:  #242424;
+    --ms-text:        #E2D4BE;
+    --ms-muted:       rgba(216, 195, 165, 0.55);
+    --ms-border:      rgba(201, 164, 76, 0.25);
+    --ms-border-soft: rgba(201, 164, 76, 0.1);
+    --ms-radius:      12px;
+    --ms-radius-lg:   18px;
+    --ms-shadow:      0 24px 60px rgba(0,0,0,0.8);
+    --ms-glow:        0 0 40px rgba(201, 164, 76, 0.15);
+}
+
+body.missions-page {
+    background: var(--ms-dark);
+    color: var(--ms-text);
+    font-family: 'Lora', Georgia, serif;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(201, 164, 76, 0.05), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(30, 80, 120, 0.05), transparent 40%);
+    background-attachment: fixed;
+}
+
+body.missions-page nav {
+    background: rgba(10, 10, 10, 0.95);
+    border-bottom: 1px solid var(--ms-border);
+    backdrop-filter: blur(10px);
+}
+
+.ms-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 40px 32px 80px;
+}
+
+/* ── Hero Header ─────────────────────────────────────────────── */
+.ms-hero {
+    text-align: center;
+    padding: 60px 0;
+    position: relative;
+}
+.ms-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 200px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--ms-gold-dim), transparent);
+}
+.ms-hero__kicker {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    color: var(--ms-gold-dim);
+    text-transform: uppercase;
+    margin: 0 0 12px;
+}
+.ms-hero__title {
+    font-family: 'Cinzel Decorative', 'Pirata One', cursive;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    color: var(--ms-gold-light);
+    margin: 0 0 16px;
+    text-shadow: 0 4px 24px rgba(201,164,76,0.25);
+    line-height: 1.1;
+}
+.ms-hero__subtitle {
+    font-size: 1.1rem;
+    color: var(--ms-muted);
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ── Mission Board ────────────────────────────────────────────── */
+.ms-board {
+    margin-top: 60px;
+}
+.ms-board__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.ms-board__title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    color: var(--ms-gold);
+    margin: 0;
+    letter-spacing: 2px;
+}
+.ms-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.ms-filter-btn {
+    background: rgba(201,164,76,0.05);
+    border: 1px solid var(--ms-border-soft);
+    border-radius: 20px;
+    padding: 8px 16px;
+    color: var(--ms-text);
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.ms-filter-btn:hover {
+    background: rgba(201,164,76,0.15);
+    border-color: var(--ms-border);
+}
+.ms-filter-btn.active {
+    background: rgba(201,164,76,0.25);
+    border-color: var(--ms-gold);
+    color: var(--ms-gold-light);
+    box-shadow: 0 0 16px rgba(201,164,76,0.2);
+}
+
+.ms-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+/* Card Styling */
+.ms-card {
+    background: linear-gradient(160deg, var(--ms-dark-light), var(--ms-dark-mid));
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+.ms-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.8), var(--ms-glow);
+    border-color: var(--ms-gold);
+}
+.ms-card.active {
+    border-color: var(--ms-gold);
+    box-shadow: 0 0 0 1px var(--ms-gold), var(--ms-glow);
+}
+.ms-card__img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--ms-border-soft);
+}
+.ms-card__body {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.ms-card__title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--ms-gold-light);
+    margin: 0 0 12px;
+}
+.ms-card__meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--ms-muted);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--ms-border-soft);
+}
+.ms-card__difficulty, .ms-card__reward {
+    background: rgba(0,0,0,0.4);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-family: 'Cinzel', serif;
+}
+.ms-card__desc {
+    font-size: 0.9rem;
+    color: var(--ms-text);
+    opacity: 0.8;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ── Engine Section (Gameplay) ───────────────────────────────── */
+.ms-engine {
+    margin-top: 80px;
+    scroll-margin-top: 100px;
+}
+.ms-engine__inner {
+    background: linear-gradient(135deg, rgba(20,20,20,0.95), rgba(10,10,10,0.98));
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius-lg);
+    padding: 40px;
+    box-shadow: var(--ms-shadow), 0 0 80px rgba(0,0,0,0.5) inset;
+}
+
+/* Progress */
+.ms-progress { margin-bottom: 32px; }
+.ms-progress__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 12px;
+}
+.ms-progress__title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    color: var(--ms-gold);
+}
+.ms-progress__step {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    color: var(--ms-muted);
+    letter-spacing: 1px;
+}
+.ms-progress__bar {
+    height: 4px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.ms-progress__fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--ms-gold-dim), var(--ms-gold));
+    width: 0%;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Layout Grid */
+.ms-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 40px;
+}
+
+/* Scene */
+.ms-scene {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.ms-scene__figure {
+    margin: 0;
+    position: relative;
+    border-radius: var(--ms-radius);
+    overflow: hidden;
+    border: 1px solid var(--ms-border);
+    aspect-ratio: 16/9;
+    background: #000;
+}
+.ms-scene__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease;
+}
+.ms-scene__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 40%);
+}
+.ms-scene__content {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--ms-border-soft);
+    padding: 32px;
+    border-radius: var(--ms-radius);
+}
+.ms-scene__title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    color: var(--ms-gold-light);
+    margin: 0 0 16px;
+}
+.ms-scene__text {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--ms-text);
+    margin: 0;
+}
+
+/* Sidebar Panels */
+.ms-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.ms-choices-panel, .ms-result-panel, .ms-reward-panel {
+    background: rgba(0,0,0,0.6);
+    border: 1px solid var(--ms-border-soft);
+    border-radius: var(--ms-radius);
+    padding: 24px;
+}
+.ms-panel-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: var(--ms-muted);
+    text-transform: uppercase;
+    margin: 0 0 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--ms-border-soft);
+}
+
+.ms-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.ms-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 14px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    border: none;
+}
+.ms-btn--choice {
+    background: linear-gradient(to right, rgba(201,164,76,0.1), rgba(201,164,76,0.02));
+    border: 1px solid var(--ms-border);
+    color: var(--ms-gold-light);
+    text-align: left;
+}
+.ms-btn--choice:hover:not(:disabled) {
+    background: rgba(201,164,76,0.2);
+    border-color: var(--ms-gold);
+    transform: translateX(4px);
+}
+.ms-btn--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}
+.ms-btn--primary {
+    background: linear-gradient(135deg, var(--ms-gold), #b38a36);
+    color: #000;
+    box-shadow: 0 4px 16px rgba(201,164,76,0.3);
+}
+.ms-btn--primary:hover {
+    box-shadow: 0 6px 24px rgba(201,164,76,0.5);
+    transform: translateY(-2px);
+}
+.ms-btn--ghost {
+    background: transparent;
+    border: 1px solid var(--ms-gold-dim);
+    color: var(--ms-gold);
+}
+.ms-btn--ghost:hover {
+    background: rgba(201,164,76,0.1);
+    color: var(--ms-gold-light);
+}
+
+.ms-result__text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+.ms-result__impact {
+    font-style: italic;
+    color: var(--ms-gold-dim);
+    margin: 12px 0 0;
+    font-size: 0.85rem;
+}
+
+.ms-reward-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.ms-reward-list li {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--ms-gold-light);
+    background: rgba(201,164,76,0.08);
+    padding: 8px 12px;
+    border-radius: 4px;
+    border-left: 2px solid var(--ms-gold);
+}
+.ms-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.ms-actions .ms-btn {
+    flex: 1;
+}
+
+/* ── History Section ─────────────────────────────────────────── */
+.ms-log-section {
+    margin-top: 80px;
+}
+.ms-log {
+    background: rgba(20,20,20,0.9);
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    padding: 32px;
+}
+.ms-log__list {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.ms-log__list li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    padding: 16px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--ms-border-soft);
+    border-radius: 8px;
+}
+.ms-log__title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--ms-gold);
+    margin-bottom: 4px;
+}
+.ms-log__time {
+    font-size: 0.8rem;
+    color: var(--ms-muted);
+}
+.ms-log__outcome {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    padding: 4px 12px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    align-self: center;
+}
+.ms-log__outcome.success { background: rgba(81,207,102,0.15); color: #69db7c; border: 1px solid rgba(81,207,102,0.3); }
+.ms-log__outcome.partial { background: rgba(201,164,76,0.15); color: var(--ms-gold); border: 1px solid var(--ms-border); }
+.ms-log__outcome.failure { background: rgba(250,82,82,0.15); color: #ff8787; border: 1px solid rgba(250,82,82,0.3); }
+
+/* ── Cinematic Loot Modal ────────────────────────────────────── */
+.ms-loot-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.ms-loot-modal[aria-hidden="false"] {
+    visibility: visible;
+    opacity: 1;
+}
+.ms-loot-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(10,5,2,0.9), rgba(0,0,0,0.98));
+    backdrop-filter: blur(16px);
+}
+.ms-loot-modal__content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+    width: 90%;
+    transform: scale(0.9);
+    transition: transform 0.6s cubic-bezier(0.2, 1.2, 0.3, 1);
+}
+.ms-loot-modal[aria-hidden="false"] .ms-loot-modal__content {
+    transform: scale(1);
+}
+.ms-loot-modal__title {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 3.5rem;
+    color: var(--ms-gold-light);
+    margin: 0 0 40px;
+    text-shadow: 0 0 40px rgba(201,164,76,0.6);
+    animation: pulse-glow 3s infinite;
+}
+@keyframes pulse-glow {
+    0%, 100% { text-shadow: 0 0 20px rgba(201,164,76,0.4); }
+    50% { text-shadow: 0 0 60px rgba(201,164,76,0.8); }
+}
+
+.ms-loot-modal__items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 60px;
+}
+.ms-loot-item {
+    background: rgba(20,15,10,0.8);
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    padding: 24px;
+    width: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.5), inset 0 0 20px rgba(201,164,76,0.1);
+    opacity: 0;
+    transform: translateY(20px);
+}
+.ms-loot-modal[aria-hidden="false"] .ms-loot-item {
+    animation: loot-reveal 0.6s ease forwards;
+}
+@keyframes loot-reveal {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.ms-loot-item__icon {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,164,76,0.2), transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+}
+.ms-loot-item__icon img {
+    width: 60px; height: 60px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+}
+.ms-loot-item__val {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+.ms-loot-item__label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--ms-gold-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.ms-loot-modal__close {
+    padding: 16px 48px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .ms-grid { grid-template-columns: 1fr; }
+    .ms-hero__title { font-size: 3rem; }
+}
+@media (max-width: 768px) {
+    .ms-container { padding: 24px 16px; }
+    .ms-engine__inner { padding: 24px; }
+    .ms-scene__content { padding: 20px; }
+    .ms-actions { flex-direction: column; }
+    .ms-log__list li { grid-template-columns: 1fr; gap: 8px; }
+    .ms-log__outcome { justify-self: start; }
+}
+
+/* Added Footer Theme */
+body.missions-page footer { background: rgba(10, 10, 10, 0.98); border-top: 1px solid var(--ms-border); }
