@@ -1,0 +1,301 @@
+/* ============================================
+   TRIVIA PAGE STYLES (THE LORE ARCHIVES)
+   ============================================ */
+
+/* ── HERO BANNER ── */
+.trivia-hero {
+    position: relative;
+    height: 40vh;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    margin-top: -80px; /* Offset for fixed nav */
+}
+
+.trivia-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.trivia-hero__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    filter: brightness(0.6) sepia(0.3);
+}
+
+.trivia-hero__bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(10, 10, 12, 0.4) 0%, var(--bg-deep) 100%);
+}
+
+.trivia-hero__content {
+    position: relative;
+    z-index: 2;
+    padding: 0 1.5rem;
+    margin-top: 80px;
+}
+
+.trivia-title {
+    font-family: var(--font-cinzel-decorative);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--text-gold);
+    text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+}
+
+.trivia-subtitle {
+    font-family: var(--font-cinzel);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--text-light);
+    opacity: 0.9;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+/* ── MAIN LAYOUT ── */
+.trivia-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.trivia-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .trivia-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── SIDEBAR (INDEX) ── */
+.trivia-sidebar {
+    background: rgba(15, 15, 18, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+    position: sticky;
+    top: 100px;
+    backdrop-filter: blur(10px);
+}
+
+.sidebar-title {
+    font-family: var(--font-cinzel);
+    color: var(--text-gold);
+    font-size: 1.25rem;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.topic-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.topic-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-light);
+    font-family: var(--font-lora);
+    font-size: 1rem;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topic-btn:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--text-gold);
+    border-color: rgba(212, 175, 55, 0.3);
+    padding-left: 1.5rem;
+}
+
+.topic-btn.active {
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.2) 0%, transparent 100%);
+    border-left: 3px solid var(--text-gold);
+    color: var(--text-gold);
+    font-weight: 600;
+}
+
+/* ── MAIN CONTENT (THE JOURNAL) ── */
+.trivia-main {
+    min-height: 500px;
+}
+
+.journal-card {
+    background: #1a1a1d;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 0 60px rgba(0, 0, 0, 0.6);
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+}
+
+/* Add a subtle parchment texture overlay */
+.journal-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('../assets/images/map/parchment-texture.jpg');
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.journal-initial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 300px;
+    text-align: center;
+    color: rgba(234, 224, 200, 0.5);
+    font-family: var(--font-cinzel);
+    animation: pulseCompass 4s infinite ease-in-out;
+}
+
+.journal-compass {
+    width: 80px;
+    height: 80px;
+    opacity: 0.4;
+    margin-bottom: 1.5rem;
+}
+
+@keyframes pulseCompass {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.05); opacity: 0.6; }
+}
+
+.journal-content, .journal-loading {
+    position: relative;
+    z-index: 1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Loading Spinner */
+.journal-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    color: var(--text-gold);
+    font-family: var(--font-cinzel);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(212, 175, 55, 0.2);
+    border-top-color: var(--text-gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* Article Header */
+.journal-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.topic-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--text-gold);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.topic-title {
+    font-family: var(--font-cinzel-decorative);
+    font-size: 2.5rem;
+    color: var(--text-gold);
+    margin: 0;
+}
+
+/* Article Text Formatting */
+.topic-text {
+    font-family: var(--font-lora);
+    color: var(--text-light);
+    line-height: 1.8;
+    font-size: 1.1rem;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.topic-text h2, .topic-text h3 {
+    font-family: var(--font-cinzel);
+    color: var(--text-gold);
+    margin: 2rem 0 1rem;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+.topic-text p {
+    margin-bottom: 1.5rem;
+}
+
+.journal-footer {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px dashed rgba(212, 175, 55, 0.3);
+    text-align: right;
+    font-size: 0.9rem;
+    font-family: var(--font-cinzel);
+}
+
+.journal-footer a {
+    color: var(--text-gold);
+    text-decoration: none;
+    transition: text-shadow 0.3s;
+}
+
+.journal-footer a:hover {
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
