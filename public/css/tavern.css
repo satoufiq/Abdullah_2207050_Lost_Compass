@@ -1,0 +1,276 @@
+/* ============================================
+   TAVERN PAGE - MAIN STYLESHEET
+   Premium Redesign
+   ============================================ */
+
+:root {
+    --tavern-dark-wood: #261711;
+    --tavern-wood: #3A2418;
+    --tavern-fire-orange: #C46A2D;
+    --tavern-fire-glow: rgba(196, 106, 45, 0.3);
+    --tavern-warm-gold: #C9A44C;
+    --tavern-smoky-gray: #80756A;
+    --tavern-parchment: #E2D4BE;
+    --tavern-dark-overlay: rgba(38, 23, 17, 0.92);
+}
+
+body.tavern-page {
+    background: var(--tavern-dark-wood);
+    color: var(--tavern-parchment);
+    font-family: 'Lora', Georgia, serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* OVERRIDE GLOBAL NAVBAR FOR TAVERN */
+body.tavern-page nav {
+    background: rgba(38, 23, 17, 0.95);
+    border-bottom: 2px solid var(--tavern-warm-gold);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 30px var(--tavern-fire-glow);
+    backdrop-filter: blur(10px);
+}
+
+body.tavern-page .nav-logo .logo-text {
+    color: var(--tavern-warm-gold);
+    text-shadow: 0 0 16px rgba(201, 164, 76, 0.7);
+}
+
+body.tavern-page .nav-menu a {
+    color: var(--tavern-parchment);
+    transition: all 0.3s ease;
+}
+
+body.tavern-page .nav-menu a:hover,
+body.tavern-page .nav-menu a.active {
+    color: var(--tavern-warm-gold);
+    text-shadow: 0 0 12px rgba(201, 164, 76, 0.6);
+}
+
+/* ============================================
+   TAVERN ATMOSPHERE EFFECTS
+   ============================================ */
+.tavern-smoke {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-repeat: repeat;
+    opacity: 0.15;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 1;
+    animation: smoke-drift 40s linear infinite;
+}
+
+.tavern-glow {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(ellipse at 50% 50%, var(--tavern-fire-glow) 0%, transparent 80%);
+    pointer-events: none;
+    z-index: 1;
+    animation: fire-pulse 4s ease-in-out infinite;
+}
+
+@keyframes smoke-drift {
+    from { background-position: 0 0; }
+    to { background-position: -500px -500px; }
+}
+
+@keyframes fire-pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+}
+
+/* ============================================
+   HERO TAVERN SECTION
+   ============================================ */
+.tavern-hero {
+    position: relative;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding-top: 80px;
+}
+
+.tavern-hero-bg {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+}
+
+.tavern-interior-img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: sepia(0.4) brightness(0.6) contrast(1.2);
+}
+
+.tavern-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, var(--tavern-dark-overlay) 0%, rgba(38, 23, 17, 0.7) 40%, var(--tavern-dark-overlay) 100%);
+}
+
+.tavern-hero-content {
+    position: relative; z-index: 2; text-align: center;
+}
+
+.tavern-title {
+    font-family: 'Pirata One', cursive;
+    font-size: clamp(3rem, 7vw, 6rem);
+    color: var(--tavern-warm-gold);
+    text-shadow: 0 0 20px rgba(201, 164, 76, 0.8), 3px 3px 0 rgba(0,0,0,0.8);
+    margin: 0 0 10px;
+}
+
+.tavern-subtitle {
+    font-size: 1.2rem;
+    color: var(--tavern-parchment);
+    font-style: italic;
+    margin-bottom: 40px;
+}
+
+.tavern-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-tavern {
+    background: linear-gradient(135deg, rgba(196, 106, 45, 0.4), rgba(58, 36, 24, 0.8));
+    border: 1px solid var(--tavern-warm-gold);
+    color: var(--tavern-parchment);
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    padding: 12px 25px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+}
+
+.btn-tavern:hover {
+    background: linear-gradient(135deg, rgba(201, 164, 76, 0.4), rgba(196, 106, 45, 0.6));
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(196, 106, 45, 0.5);
+}
+
+/* ============================================
+   SECTIONS & BOARDS
+   ============================================ */
+.section-title {
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    color: var(--tavern-warm-gold);
+    margin-bottom: 5px;
+}
+.section-subtitle {
+    text-align: center;
+    color: var(--tavern-smoky-gray);
+    font-style: italic;
+    margin-bottom: 40px;
+}
+
+/* Rumor Board */
+.rumor-board-section { padding: 80px 20px; position: relative; z-index: 2; background: var(--tavern-dark-wood); }
+.rumor-board-container { max-width: 1000px; margin: 0 auto; }
+.rumor-board {
+    background-color: var(--tavern-wood);
+    background-blend-mode: multiply;
+    border: 15px solid #20130e;
+    border-radius: 10px;
+    min-height: 400px;
+    position: relative;
+    padding: 40px;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 0 20px 50px rgba(0,0,0,0.6);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.rumor-card {
+    background: #e6d3af;
+    color: #3e2723;
+    padding: 20px;
+    width: 240px;
+    min-height: 200px;
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.5);
+    position: relative;
+    transform: rotate(-2deg);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    font-family: 'Lora', serif;
+}
+.rumor-card:nth-child(even) { transform: rotate(3deg); background: #d7c19a; }
+.rumor-card:hover { transform: scale(1.05) rotate(0deg); z-index: 10; box-shadow: 5px 10px 20px rgba(0,0,0,0.6); }
+.rumor-card::before {
+    content: '📌'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    font-size: 1.5rem; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
+}
+.rumor-text { font-size: 1rem; line-height: 1.4; font-weight: 600; margin-bottom: 10px; }
+.rumor-source { font-size: 0.85rem; font-style: italic; color: #5d4037; }
+
+/* Discussions */
+.discussion-section { padding: 80px 20px; background: rgba(30, 18, 12, 0.95); position: relative; z-index: 2; border-top: 1px solid rgba(201,164,76,0.2); }
+.discussion-container { max-width: 800px; margin: 0 auto; }
+.discussions-feed { display: flex; flex-direction: column; gap: 20px; }
+.discussion-card {
+    background: rgba(45, 28, 20, 0.8);
+    border: 1px solid rgba(201, 164, 76, 0.2);
+    border-radius: 8px;
+    padding: 25px;
+    display: flex;
+    gap: 20px;
+}
+.discussion-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--tavern-warm-gold); object-fit: cover; }
+.discussion-content { flex: 1; }
+.discussion-title { font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--tavern-warm-gold); margin: 0 0 5px; }
+.discussion-author { font-size: 0.85rem; color: var(--tavern-smoky-gray); margin-bottom: 15px; }
+.discussion-message { color: var(--tavern-parchment); line-height: 1.6; }
+
+/* Notice Board */
+.notice-board-section { padding: 80px 20px; background: var(--tavern-dark-wood); position: relative; z-index: 2; border-top: 1px solid rgba(201,164,76,0.2); }
+.notice-board-container { max-width: 1000px; margin: 0 auto; }
+.notices-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+.notice-card {
+    background: #1a100a;
+    border: 2px solid var(--tavern-fire-orange);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+.notice-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(196, 106, 45, 0.3); }
+.notice-image { width: 100%; height: 200px; object-fit: cover; filter: sepia(0.3); border-bottom: 2px solid var(--tavern-fire-orange); }
+.notice-info { padding: 20px; text-align: center; }
+.notice-info h4 { font-family: 'Cinzel', serif; font-size: 1.4rem; color: #fff; margin: 0 0 10px; }
+.notice-reward { color: var(--tavern-warm-gold); font-weight: bold; margin-bottom: 10px; }
+.notice-description { font-size: 0.9rem; color: #aaa; line-height: 1.4; }
+
+/* Leaderboard */
+.leaderboard-section { padding: 80px 20px; background: rgba(30, 18, 12, 0.95); position: relative; z-index: 2; border-top: 1px solid rgba(201,164,76,0.2); }
+.leaderboard-container { max-width: 900px; margin: 0 auto; }
+.leaderboard-table { background: rgba(0,0,0,0.4); border: 1px solid rgba(201,164,76,0.2); border-radius: 8px; overflow: hidden; }
+.leaderboard-header { display: grid; grid-template-columns: 80px 1fr 120px 100px 120px; background: rgba(201,164,76,0.1); padding: 15px 20px; font-weight: bold; color: var(--tavern-warm-gold); }
+.leaderboard-row { display: grid; grid-template-columns: 80px 1fr 120px 100px 120px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: center; }
+.leaderboard-row.rank-1 { background: linear-gradient(90deg, rgba(201,164,76,0.2), transparent); border-left: 3px solid var(--tavern-warm-gold); }
+
+/* Modals */
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 99999; backdrop-filter: blur(5px); }
+.modal-content.tavern-modal {
+    background: var(--tavern-wood);
+    border: 2px solid var(--tavern-warm-gold);
+    border-radius: 8px;
+    width: 90%; max-width: 600px;
+    margin: 10% auto; padding: 40px;
+    position: relative;
+    color: var(--tavern-parchment);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(201,164,76,0.2);
+    text-align: center;
+}
+.modal-content.tavern-modal h2 { font-family: 'Cinzel', serif; color: var(--tavern-warm-gold); font-size: 2rem; margin: 0 0 10px; }
+.modal-close { position: absolute; right: 20px; top: 15px; background: none; border: none; color: #aaa; font-size: 28px; cursor: pointer; }
+.modal-close:hover { color: var(--tavern-warm-gold); }
+
+/* Footer Override */
+body.tavern-page footer { border-top: 2px solid var(--tavern-warm-gold); }

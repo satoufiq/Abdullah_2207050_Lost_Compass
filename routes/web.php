@@ -21,12 +21,7 @@ use App\Http\Controllers\AdminController;
 // ─── Home (Dynamic via Controller) ────────────────────────────
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// ─── Authentication Routes ────────────────────────────────────
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::get('/signup', [AuthController::class, 'showSignup'])->name('signup');
-Route::post('/signup', [AuthController::class, 'signup']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// ─── Authentication Routes (Handled by Breeze) ────────────────
 
 // ─── Admin Control Panel ──────────────────────────────────────
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -119,29 +114,33 @@ Route::get('/ships', function () {
     return view('pages.ships');
 })->name('ships');
 
-Route::get('/map', function () {
-    return view('pages.map');
-})->name('map');
-
-Route::get('/missions', function () {
-    return view('pages.missions');
-})->name('missions');
-
-Route::get('/relics', function () {
-    return view('pages.relics');
-})->name('relics');
-
 Route::get('/rankings', function () {
     return view('pages.rankings');
 })->name('rankings');
 
-Route::get('/tavern', function () {
-    return view('pages.tavern');
-})->name('tavern');
-
 Route::get('/trivia', function () {
     return view('pages.trivia');
 })->name('trivia');
+
+// Protected: Must have completed the Pirate Quiz
+Route::middleware(['auth', 'profile.complete'])->group(function () {
+    
+    Route::get('/tavern', function () {
+        return view('pages.tavern');
+    })->name('tavern');
+
+    // Protected: Must own a ship for voyages
+    Route::middleware(['has.ship'])->group(function () {
+        Route::get('/map', function () {
+            return view('pages.map');
+        })->name('map');
+
+        Route::get('/missions', function () {
+            return view('pages.missions');
+        })->name('missions');
+    });
+
+});
 
 use App\Http\Controllers\ProfileController;
 
@@ -223,10 +222,6 @@ Route::middleware('auth')->group(function () {
     });
 
     // Profile routes from Breeze
-    // Note: ProfileController exists as App\Http\Controllers\ProfileController already from original
-    // but Breeze might have its own or we can just comment them out if they conflict.
-    // Actually, Breeze added its own ProfileController that handles edit, update, destroy.
-    // Let's add them:
     Route::get('/breeze-profile', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/breeze-profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/breeze-profile', [\App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
