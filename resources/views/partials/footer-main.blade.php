@@ -26,21 +26,16 @@
         <div class="footer-section">
             <h3>Account</h3>
             <ul class="footer-links">
-                <li><a href="{{ url('/profile') }}">Create Profile</a></li>
-                <li><a href="{{ url('/login') }}">Login</a></li>
+                @auth
+                    <li><a href="{{ url('/profile') }}">My Profile</a></li>
+                @else
+                    <li><a href="{{ url('/login') }}">Login</a></li>
+                    <li><a href="{{ url('/signup') }}">Join the Crew</a></li>
+                @endauth
                 <li><a href="{{ url('/quiz') }}">Take Quiz</a></li>
-                <li><a href="#">My Treasure</a></li>
             </ul>
         </div>
-        <div class="footer-section">
-            <h3>Follow Us</h3>
-            <div class="social-links">
-                <a href="#" title="Facebook">f</a>
-                <a href="#" title="Twitter">𝕏</a>
-                <a href="#" title="Instagram">📷</a>
-                <a href="#" title="Discord">💬</a>
-            </div>
-        </div>
+
     </div>
     <div class="footer-bottom">
         <p>&copy; {{ date('Y') }} The Lost Compass. All rights reserved. The world of pirates awaits.</p>

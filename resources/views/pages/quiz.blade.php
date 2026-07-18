@@ -2,6 +2,7 @@
 
 @section('title', 'The Compass of Fate | The Lost Compass')
 @section('meta_description', 'The Compass of Fate - Discover your pirate identity.')
+@section('body_class', 'quiz-page')
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/quiz.css') }}">

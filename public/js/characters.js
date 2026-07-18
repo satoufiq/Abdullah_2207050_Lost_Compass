@@ -1,7 +1,18 @@
 const FALLBACK_CHARACTER_IMAGE = 'assets/images/home/new images/crew showcase.jpeg';
 
-// Base URL injected by Blade layout (supports XAMPP subpath like /lost-compass/public)
-const APP_BASE = window.APP_BASE || '';
+// Smart base URL detection: use window.APP_BASE if valid, else auto-detect from current URL
+(function detectAppBase() {
+  const injected = (window.APP_BASE || '').trim();
+  if (injected && window.location.href.startsWith(injected)) {
+    return; // already correct
+  }
+  const path = window.location.pathname;
+  const match = path.match(/^(.*?\/(?:public|index\.php))/);
+  window.APP_BASE = match ? (window.location.origin + match[1]) : window.location.origin;
+}());
+const APP_BASE = window.APP_BASE || window.location.origin;
+
+
 
 let charactersCache = [];
 let isFetching = false;
@@ -427,11 +438,17 @@ function initCharacterGalleryPage() {
   initFooterYear();
   renderFilteredCharacters();
 
-  window.addEventListener('load', () => {
+  const hideLoader = () => {
     setTimeout(() => {
       loadingManager.hideLoadingScreen();
     }, 700);
-  });
+  };
+
+  if (document.readyState === 'complete') {
+    hideLoader();
+  } else {
+    window.addEventListener('load', hideLoader);
+  }
 }
 
 // === IDENTITY QUIZ LOGIC ===

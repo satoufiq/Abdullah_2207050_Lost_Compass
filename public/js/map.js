@@ -432,11 +432,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const loader = document.getElementById('page-loader');
   if (loader) {
-    window.addEventListener('load', () => {
+    const hideLoader = () => {
       document.body.classList.add('page-loaded');
       loader.classList.add('hide');
       window.setTimeout(() => loader.remove(), 520);
-    }, { once: true });
+    };
+
+    if (document.readyState === 'complete') {
+      hideLoader();
+    } else {
+      window.addEventListener('load', hideLoader, { once: true });
+    }
   }
 });
 

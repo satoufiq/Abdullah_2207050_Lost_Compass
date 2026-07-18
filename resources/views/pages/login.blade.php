@@ -76,7 +76,6 @@
                             <span class="custom-checkbox"></span>
                             Remember my crew seal
                         </label>
-                        <a href="#" class="forgot-key-link" id="forgot-key-trigger">Lost your compass?</a>
                     </div>
 
                     {{-- Embark Button --}}

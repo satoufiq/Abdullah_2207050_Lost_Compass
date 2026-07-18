@@ -67,7 +67,6 @@
   color: #f8e4c0;
   letter-spacing: 1.8px;
   text-transform: uppercase;
-  animation: loaderTextPulse 1.4s ease-in-out infinite;
 }
 
 @keyframes loaderSpin {
@@ -132,7 +131,7 @@
 }
 
 .map-page nav.map-nav {
-  position: sticky;
+  position: fixed;
   top: 0;
   background: linear-gradient(180deg, rgba(122, 82, 48, 0.98) 0%, rgba(86, 51, 28, 0.98) 100%) !important;
   border-bottom: 2px solid rgba(201, 164, 76, 0.72) !important;
@@ -143,6 +142,12 @@
 .map-page nav.map-nav::before {
   background: linear-gradient(90deg, transparent, rgba(201, 164, 76, 0.35), transparent);
   opacity: 0.92;
+}
+
+/* Fix BGM button overlap with mini-compass */
+body.map-page .bgm-toggle-btn {
+  right: auto !important;
+  left: 20px !important;
 }
 
 .map-page nav.map-nav .logo-text,
@@ -187,8 +192,7 @@
 .map-nav .nav-toggle-bar {
   background: #fff0c7;
 }
-  display: block;
-  filter: drop-shadow(0 0 12px rgba(201, 164, 76, 0.45));
+
 .map-nav .btn-auth {
   border-color: rgba(201, 164, 76, 0.5);
   background: rgba(72, 39, 22, 0.55);
@@ -203,34 +207,11 @@
    ATLAS INTRO PANEL
    ============================================ */
 
-.map-hero-panel {
-  position: relative;
-  z-index: 10;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.25rem 1.5rem;
-  display: flex;
-  align-items: center;
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  border-radius: 18px;
-  background: linear-gradient(135deg, rgba(30, 20, 15, 0.8) 0%, rgba(15, 10, 5, 0.9) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  color: #e5d9c5;
-}
 
-.atlas-copy {
-  max-width: 700px;
-}
 
-.atlas-kicker {
-  margin-bottom: 0.4rem;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  font-size: 0.78rem;
-  color: #d4af37;
-}
+
+
+
 
 .atlas-copy h2 {
   margin-bottom: 0.35rem;
@@ -244,22 +225,9 @@
   font-size: 0.98rem;
 }
 
-.atlas-legend {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.6rem;
-}
 
-.legend-chip {
-  padding: 0.55rem 0.8rem;
-  border-radius: 999px;
-  background: rgba(90, 56, 37, 0.08);
-  border: 1px solid rgba(90, 56, 37, 0.22);
-  color: var(--burnt-brown);
-  font-size: 0.86rem;
-  white-space: nowrap;
-}
+
+
 
 /* ============================================
    PAGE BACKGROUND
@@ -1204,14 +1172,9 @@
     padding: 0.9rem 1rem;
   }
 
-  .atlas-panel {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  
 
-  .atlas-legend {
-    justify-content: flex-start;
-  }
+  
 
   .map-title-section {
     padding: 2.5rem 1.5rem 1rem;
@@ -1272,15 +1235,9 @@
     gap: 0.75rem;
   }
 
-  .atlas-panel {
-    padding: 1rem;
-    border-radius: 14px;
-  }
+  
 
-  .legend-chip {
-    width: 100%;
-    text-align: center;
-  }
+  
 
   .map-title-section {
     padding: 2rem 1rem 0.85rem;

@@ -100,11 +100,7 @@ body.missions-page nav {
     margin: 0;
     letter-spacing: 2px;
 }
-.ms-filters {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
+
 .ms-filter-btn {
     background: rgba(201,164,76,0.05);
     border: 1px solid var(--ms-border-soft);
@@ -453,8 +449,8 @@ body.missions-page nav {
     align-self: center;
 }
 .ms-log__outcome.success { background: rgba(81,207,102,0.15); color: #69db7c; border: 1px solid rgba(81,207,102,0.3); }
-.ms-log__outcome.partial { background: rgba(201,164,76,0.15); color: var(--ms-gold); border: 1px solid var(--ms-border); }
-.ms-log__outcome.failure { background: rgba(250,82,82,0.15); color: #ff8787; border: 1px solid rgba(250,82,82,0.3); }
+
+
 
 /* ── Cinematic Loot Modal ────────────────────────────────────── */
 .ms-loot-modal {

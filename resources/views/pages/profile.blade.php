@@ -251,33 +251,33 @@
             <p class="pf-section-sub">Your collection of rare artifacts and cursed treasures.</p>
         </div>
 
-        <div class="vault-stats-wrapper" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom: 2rem; background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 8px;">
-            <div style="flex:1; min-width: 200px;">
+        <div class="vault-stats-wrapper">
+            <div class="vault-progress-col">
                 <strong>Collection Progress:</strong> {{ $stats['relics_collected'] }} / {{ $stats['total_relics'] }} ({{ $stats['relic_progress'] }}%)
-                <div class="progress-bar-bg" style="background:#333; height:8px; border-radius:4px; margin-top:5px; overflow:hidden;">
-                    <div class="progress-bar-fill" style="background:#d4af37; height:100%; width:{{ $stats['relic_progress'] }}%"></div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width:{{ $stats['relic_progress'] }}%"></div>
                 </div>
             </div>
-            <div style="display:flex; gap:1rem; text-align:center;">
-                <div><span style="color:#ffd700; font-size:1.2rem; font-weight:bold;">{{ $stats['legendary_relics'] }}</span><br><small>Legendary</small></div>
-                <div><span style="color:#a333c8; font-size:1.2rem; font-weight:bold;">{{ $stats['epic_relics'] }}</span><br><small>Epic</small></div>
-                <div><span style="color:#2185d0; font-size:1.2rem; font-weight:bold;">{{ $stats['rare_relics'] }}</span><br><small>Rare</small></div>
-                <div><span style="color:#a0a0a0; font-size:1.2rem; font-weight:bold;">{{ $stats['common_relics'] }}</span><br><small>Common</small></div>
+            <div class="vault-rarity-counts">
+                <div class="rarity-count rarity-legendary"><span>{{ $stats['legendary_relics'] }}</span><small>Legendary</small></div>
+                <div class="rarity-count rarity-epic"><span>{{ $stats['epic_relics'] }}</span><small>Epic</small></div>
+                <div class="rarity-count rarity-rare"><span>{{ $stats['rare_relics'] }}</span><small>Rare</small></div>
+                <div class="rarity-count rarity-common"><span>{{ $stats['common_relics'] }}</span><small>Common</small></div>
             </div>
         </div>
 
-        <div class="vault-controls" style="margin-bottom: 2rem; text-align:center;">
-            <form action="{{ route('profile') }}" method="GET" style="display:inline-flex; gap:1rem; flex-wrap:wrap; justify-content:center; align-items:center;">
-                <input type="text" name="search" placeholder="Search relics..." value="{{ request('search') }}" style="padding:0.5rem; background:#222; border:1px solid #444; color:white; border-radius:4px;">
+        <div class="vault-controls">
+            <form action="{{ route('profile') }}" method="GET">
+                <input type="text" name="search" placeholder="Search relics..." value="{{ request('search') }}">
                 
-                <select name="category" style="padding:0.5rem; background:#222; border:1px solid #444; color:white; border-radius:4px;">
+                <select name="category">
                     <option value="all">All Categories</option>
                     @foreach($categories as $cat)
                         <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                     @endforeach
                 </select>
 
-                <select name="rarity" style="padding:0.5rem; background:#222; border:1px solid #444; color:white; border-radius:4px;">
+                <select name="rarity">
                     <option value="all">All Rarities</option>
                     <option value="Legendary" {{ request('rarity') == 'Legendary' ? 'selected' : '' }}>Legendary</option>
                     <option value="Epic" {{ request('rarity') == 'Epic' ? 'selected' : '' }}>Epic</option>
@@ -289,38 +289,38 @@
             </form>
         </div>
 
-        <div class="chest-section text-center" style="margin-bottom: 2rem; text-align:center;">
+        <div class="chest-section text-center">
             @if($availableChests > 0)
                 <button id="openChestBtn" class="pf-btn pf-btn--primary">Open Treasure Chest ({{ $availableChests }} Available)</button>
             @else
-                <button id="openChestBtn" class="pf-btn pf-btn--disabled" disabled style="background:#555; cursor:not-allowed;">Complete Missions to Earn Chests</button>
+                <button id="openChestBtn" class="pf-btn pf-btn--disabled" disabled>Complete Missions to Earn Chests</button>
             @endif
             <p id="chestMessage" style="display:none; color: #4ade80; margin-top: 1rem;"></p>
         </div>
 
-        <div class="relic-gallery" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:1.5rem;">
+        <div class="relic-gallery">
             @foreach($allRelics as $relic)
                 @php
                     $isOwned = in_array($relic->id, $ownedRelicIds);
                 @endphp
-                <div class="relic-card {{ $isOwned ? 'unlocked' : 'locked' }}" data-id="{{ $relic->id }}" style="background:rgba(0,0,0,0.8); border:1px solid #444; border-radius:8px; overflow:hidden; cursor:pointer; transition:transform 0.2s;">
-                    <div class="relic-image-wrapper" style="height:180px; background:#111; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                <div class="relic-card {{ $isOwned ? 'unlocked' : 'locked' }}" data-id="{{ $relic->id }}">
+                    <div class="relic-image-wrapper">
                         @if($isOwned)
-                            <img src="{{ asset('assets/images/profile/relics/' . $relic->image) }}" alt="{{ $relic->name }}" onerror="this.src='{{ asset('assets/images/profile/relics/relic-captains-medal.png') }}'" style="width:100%; height:100%; object-fit:cover;">
+                            <img src="{{ asset('assets/images/profile/relics/' . $relic->image) }}" alt="{{ $relic->name }}" onerror="this.src='{{ asset('assets/images/profile/relics/relic-captains-medal.png') }}'">
                         @else
                             <div class="silhouette" style="font-size:4rem; color:#333;">?</div>
                         @endif
                     </div>
-                    <div class="relic-info" style="padding:1rem; text-align:center;">
-                        <h4 style="margin:0 0 0.5rem 0; font-size:1rem; color:#e0e0e0;">{{ $isOwned ? $relic->name : 'Unknown Relic' }}</h4>
+                    <div class="relic-info">
+                        <h4>{{ $isOwned ? $relic->name : 'Unknown Relic' }}</h4>
                         @if($relic->rarity == 'Legendary')
-                            <span style="background:#ffd700; color:#000; padding:0.2rem 0.5rem; border-radius:4px; font-size:0.7rem; font-weight:bold;">{{ $relic->rarity }}</span>
+                            <span class="rarity-badge rarity-legendary">{{ $relic->rarity }}</span>
                         @elseif($relic->rarity == 'Epic')
-                            <span style="background:#a333c8; color:#fff; padding:0.2rem 0.5rem; border-radius:4px; font-size:0.7rem; font-weight:bold;">{{ $relic->rarity }}</span>
+                            <span class="rarity-badge rarity-epic">{{ $relic->rarity }}</span>
                         @elseif($relic->rarity == 'Rare')
-                            <span style="background:#2185d0; color:#fff; padding:0.2rem 0.5rem; border-radius:4px; font-size:0.7rem; font-weight:bold;">{{ $relic->rarity }}</span>
+                            <span class="rarity-badge rarity-rare">{{ $relic->rarity }}</span>
                         @else
-                            <span style="background:#666; color:#fff; padding:0.2rem 0.5rem; border-radius:4px; font-size:0.7rem; font-weight:bold;">{{ $relic->rarity }}</span>
+                            <span class="rarity-badge rarity-common">{{ $relic->rarity }}</span>
                         @endif
                     </div>
                 </div>
@@ -330,22 +330,24 @@
 </section>
 
 <!-- Relic Modal -->
-<div id="relicModal" class="pf-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8);">
-    <div class="pf-modal-content" style="background-color:#1a1a1a; margin:10% auto; padding:20px; border:1px solid #d4af37; width:80%; max-width:700px; border-radius:8px; display:flex; gap:2rem; position:relative;">
-        <span class="close-modal" style="position:absolute; right:20px; top:15px; color:#aaa; font-size:28px; font-weight:bold; cursor:pointer;">&times;</span>
-        <div style="flex:1; background:#000; display:flex; align-items:center; justify-content:center;">
-            <img id="modalImage" src="" alt="Relic" style="max-width:100%; max-height:300px; object-fit:contain;">
+<div id="relicModal" class="pf-modal">
+    <div class="pf-modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-image-col">
+            <img id="modalImage" src="" alt="Relic">
         </div>
-        <div style="flex:1.5;">
-            <h2 id="modalName" style="color:#d4af37; margin-top:0;">Relic Name</h2>
-            <div style="margin-bottom:1rem;">
-                <span id="modalRarity" style="padding:0.2rem 0.5rem; border-radius:4px; font-size:0.8rem; font-weight:bold;">Rarity</span>
-                <span id="modalCategory" style="background:#333; padding:0.2rem 0.5rem; border-radius:4px; font-size:0.8rem; margin-left:0.5rem; border:1px solid #555; color:#ccc;">Category</span>
+        <div class="modal-details-col">
+            <h2 id="modalName">Relic Name</h2>
+            <div class="modal-meta">
+                <span id="modalRarity" class="rarity-badge">Rarity</span>
+                <span id="modalCategory" class="modal-category-badge">Category</span>
             </div>
-            <p style="color:#ccc; font-size:0.9rem;"><strong>Origin:</strong> <span id="modalOrigin"></span></p>
-            <p style="color:#ccc; font-size:0.9rem;"><strong>Movie:</strong> <span id="modalMovie"></span></p>
-            <p style="color:#ccc; font-size:0.9rem;"><strong>Power:</strong> <span id="modalPower"></span></p>
-            <p id="modalDesc" style="margin-top:1rem; font-size:0.95rem; color:#ddd; line-height:1.5;"></p>
+            <div class="modal-desc-list">
+                <p><strong>Origin:</strong> <span id="modalOrigin"></span></p>
+                <p><strong>Movie:</strong> <span id="modalMovie"></span></p>
+                <p><strong>Power:</strong> <span id="modalPower"></span></p>
+            </div>
+            <p id="modalDesc" class="modal-story"></p>
         </div>
     </div>
 </div>

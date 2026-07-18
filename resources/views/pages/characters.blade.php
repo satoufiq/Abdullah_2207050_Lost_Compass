@@ -2,6 +2,7 @@
 
 @section('title', 'Legends of the Seven Seas | The Lost Compass')
 @section('meta_description', 'Legendary pirate archive of the Pirates of the Caribbean universe.')
+@section('body_class', 'characters-page')
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/characters.css') }}">

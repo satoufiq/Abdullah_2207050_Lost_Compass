@@ -65,6 +65,17 @@
             <h2 class="section-title">⚔️ Pirate Discussions</h2>
             <p class="section-subtitle">Join the conversation...</p>
 
+            <div class="quick-post-box reveal-on-scroll">
+                @auth
+                    <img src="{{ auth()->user()->avatar_url ?? asset('assets/images/profile/avatars/avatar-captain-fearless.png') }}" alt="Your Avatar" class="quick-post-avatar">
+                @else
+                    <img src="{{ asset('assets/images/profile/avatars/avatar-captain-fearless.png') }}" alt="Guest Avatar" class="quick-post-avatar">
+                @endauth
+                <input type="text" id="quick-discussion-title" placeholder="Title your tale..." class="tavern-input-inline">
+                <input type="text" id="quick-discussion-input" placeholder="What tale do you have for the tavern, Captain?" class="tavern-input-inline">
+                <button class="btn btn-primary btn-quick-post" id="btn-quick-post">Post</button>
+            </div>
+
             <div class="discussions-feed" id="discussions-feed">
                 <!-- Discussions will be injected here via JS -->
             </div>

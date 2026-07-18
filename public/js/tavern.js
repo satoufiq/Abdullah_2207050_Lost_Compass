@@ -239,6 +239,48 @@ function setupStoryForm() {
             }
         });
     }
+
+    // Quick Post Setup
+    const quickPostBtn = document.getElementById('btn-quick-post');
+    const quickTitleInput = document.getElementById('quick-discussion-title');
+    const quickContentInput = document.getElementById('quick-discussion-input');
+
+    if (quickPostBtn && quickTitleInput && quickContentInput) {
+        quickPostBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const title = quickTitleInput.value.trim();
+            const content = quickContentInput.value.trim();
+            
+            if (!title || !content) {
+                showTavernNotification('Please provide a title and your tale! ⚠️');
+                return;
+            }
+
+            fetch(`${window.APP_BASE || ''}/api/tavern/posts`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
+                },
+                body: JSON.stringify({ title, content })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showTavernNotification('Your story has been posted! 📖');
+                    quickTitleInput.value = '';
+                    quickContentInput.value = '';
+                    fetchPosts();
+                } else if (data.error) {
+                    showTavernNotification(data.error + ' ⚠️');
+                }
+            })
+            .catch(err => {
+                console.error('Error posting story:', err);
+                showTavernNotification('Failed to post story. Are you logged in? ⚠️');
+            });
+        });
+    }
 }
 
 // ============================================
@@ -369,9 +411,34 @@ async function fetchPosts() {
                         <button class="btn-reply" data-id="${post.id}">💬 ${post.replies} Replies</button>
                         <button class="btn-reaction ${post.has_liked ? 'liked' : ''}" data-id="${post.id}">❤️ <span class="like-count">${post.likes}</span></button>
                     </div>
+                    <div class="comments-section hidden" id="comments-section-${post.id}">
+                        <div class="comments-list">
+                            <!-- Comments will be injected here if they exist, handled in a loop below -->
+                        </div>
+                        <div class="reply-input-box">
+                            <input type="text" class="reply-input" id="reply-input-${post.id}" placeholder="Write a reply...">
+                            <button class="btn btn-secondary btn-submit-reply" data-id="${post.id}">Reply</button>
+                        </div>
+                    </div>
                 </div>
             `;
             container.insertAdjacentHTML('beforeend', html);
+            
+            // Add comments to this post if they exist
+            if (post.comments_data && post.comments_data.length > 0) {
+                const commentsList = document.querySelector(`#comments-section-${post.id} .comments-list`);
+                post.comments_data.forEach(comment => {
+                    commentsList.insertAdjacentHTML('beforeend', `
+                        <div class="comment-item">
+                            <img src="${comment.avatar}" class="comment-avatar">
+                            <div class="comment-content">
+                                <strong>${comment.author}</strong> <span class="comment-time">${comment.time}</span>
+                                <p>${comment.message}</p>
+                            </div>
+                        </div>
+                    `);
+                });
+            }
         });
 
         // Reattach interaction listeners
@@ -483,14 +550,56 @@ function setupInteractions() {
         });
     });
 
-    // Discussion Reply buttons
+    // Discussion Reply buttons (Toggle Comments)
     document.querySelectorAll('.btn-reply').forEach(btn => {
         if (btn.dataset.bound) return;
         btn.dataset.bound = "true";
         
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            showTavernNotification('Reply feature coming soon! 💬');
+            const postId = btn.getAttribute('data-id');
+            const commentsSection = document.getElementById(`comments-section-${postId}`);
+            if (commentsSection) {
+                commentsSection.classList.toggle('hidden');
+            }
+        });
+    });
+
+    // Submit Reply buttons
+    document.querySelectorAll('.btn-submit-reply').forEach(btn => {
+        if (btn.dataset.bound) return;
+        btn.dataset.bound = "true";
+        
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const postId = btn.getAttribute('data-id');
+            const input = document.getElementById(`reply-input-${postId}`);
+            const content = input.value.trim();
+            
+            if (!content) return;
+            
+            fetch(`${window.APP_BASE || ''}/api/tavern/posts/${postId}/reply`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
+                },
+                body: JSON.stringify({ content })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showTavernNotification('Reply posted! 💬');
+                    input.value = '';
+                    fetchPosts(); // Reload to show new reply
+                } else if (data.error) {
+                    showTavernNotification(data.error + ' ⚠️');
+                }
+            })
+            .catch(err => {
+                console.error('Error posting reply:', err);
+                showTavernNotification('Action failed. Are you logged in? ⚠️');
+            });
         });
     });
 

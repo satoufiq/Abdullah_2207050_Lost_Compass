@@ -311,7 +311,7 @@ class PirateIdentityQuiz {
                 scores[entry.ship] = (scores[entry.ship] || 0) + 1;
             }
         });
-        const allShips = ['The Iron Galleon', 'The Swift Sloop', 'The Phantom Brig', 'The Dreadnought', 'The Crimson Leviathan', 'The Silent Marauder', 'The Abyssal Queen', 'The Gilded Serpent', 'The Star-Catcher', 'The Tempest\'s Wrath'];
+        const allShips = ['HMS Dauntless', 'HMS Interceptor', 'Wicked Wench', 'HMS Endeavour', 'Queen Anne\'s Revenge', 'Silent Mary', 'The Empress', 'Hai Peng', 'The Edinburgh Trader', 'Flying Dutchman', 'Black Pearl', 'Dying Gull'];
         const fallback = allShips[Math.floor(Math.random() * allShips.length)];
         return { ship: this.getTopKey(scores) || fallback };
     } else if (this.quizType === 'weapon') {

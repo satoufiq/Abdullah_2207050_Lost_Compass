@@ -339,14 +339,7 @@ nav {
   font-size: 0.92rem;
 }
 
-.crew-sigil {
-  width: 100%;
-  max-width: 80px;
-  aspect-ratio: 1/1;
-  object-fit: contain;
-  display: block;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
-}
+
 
 .compass-stage {
   width: 100%;
@@ -385,68 +378,19 @@ nav {
   animation: haloPulse 3.8s ease-in-out infinite;
 }
 
-.emblem-orbit {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
 
-.emblem-badge {
-  position: absolute;
-  margin: 0;
-  width: 104px;
-  height: 104px;
-  padding: 0.36rem;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  border: 2px solid rgba(201, 164, 76, 0.68);
-  background:
-    radial-gradient(circle at 30% 25%, rgba(255, 242, 204, 0.96), rgba(187, 139, 79, 0.9) 74%),
-    linear-gradient(180deg, rgba(254, 241, 213, 0.86), rgba(194, 150, 90, 0.86));
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.26);
-}
 
-.emblem-badge figcaption {
-  position: absolute;
-  bottom: -17px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0.08rem 0.45rem;
-  border-radius: 999px;
-  background: rgba(22, 12, 8, 0.84);
-  border: 1px solid rgba(201, 164, 76, 0.5);
-  color: #efd7aa;
-  font-family: 'Cinzel', serif;
-  font-size: 0.52rem;
-  letter-spacing: 0.7px;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
 
-.captain-badge {
-  top: 2px;
-  left: 18%;
-  transform: rotate(-11deg);
-}
 
-.navigator-badge {
-  top: 2px;
-  right: 18%;
-  transform: rotate(9deg);
-}
 
-.hunter-badge {
-  bottom: -7px;
-  left: 16%;
-  transform: rotate(-8deg);
-}
 
-.cursed-badge {
-  bottom: -7px;
-  right: 16%;
-  transform: rotate(7deg);
-}
+
+
+
+
+
+
+
 
 .quiz-card-wrap {
   width: 100%;

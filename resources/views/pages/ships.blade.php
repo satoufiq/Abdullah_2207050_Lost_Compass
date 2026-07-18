@@ -2,6 +2,7 @@
 
 @section('title', 'Legendary Ships | The Lost Compass')
 @section('meta_description', 'Legendary ships archive of the Pirates of the Caribbean universe.')
+@section('body_class', 'ships-page')
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/ships.css') }}">

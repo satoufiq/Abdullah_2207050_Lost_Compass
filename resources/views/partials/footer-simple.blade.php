@@ -11,17 +11,10 @@
                 <li><a href="{{ url('/characters') }}">Characters</a></li>
                 <li><a href="{{ url('/ships') }}">Ships</a></li>
                 <li><a href="{{ url('/map') }}">Map</a></li>
-                <li><a href="{{ url('/relics') }}">Relics</a></li>
+                <li><a href="{{ url('/vault') }}">Relics</a></li>
             </ul>
         </div>
-        <div class="footer-section">
-            <h3>Connect</h3>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">𝕏</a>
-                <a href="#" aria-label="Instagram">📷</a>
-                <a href="#" aria-label="Discord">💬</a>
-            </div>
-        </div>
+
     </div>
     <div class="footer-bottom">
         <p class="copyright">&copy; <span id="footer-year">{{ date('Y') }}</span> The Lost Compass. All rights reserved. 🏴‍☠️</p>

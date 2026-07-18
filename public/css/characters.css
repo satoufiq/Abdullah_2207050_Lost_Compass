@@ -957,15 +957,7 @@ footer {
   border: 0;
 }
 
-@keyframes lanternSwing {
-  0%,
-  100% {
-    transform: rotate(1.6deg);
-  }
-  50% {
-    transform: rotate(-1.6deg);
-  }
-}
+
 
 @keyframes compassLoadingSpin {
   from {
@@ -1016,25 +1008,8 @@ footer {
   }
 }
 
-@keyframes lanternGlow {
-  0%,
-  100% {
-    opacity: 0.55;
-  }
-  50% {
-    opacity: 1;
-  }
-}
 
-@keyframes cardBreathe {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-2px);
-  }
-}
+
 
 @keyframes fadeOut {
   0% {
@@ -1110,11 +1085,6 @@ footer {
     display: none;
   }
 
-  .lantern {
-    width: 142px;
-    height: 270px;
-    top: calc(100% - 6px);
-  }
 }
 
 @media (max-width: 640px) {
@@ -1139,3 +1109,6 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+/* Added Footer Theme */
+footer { background: linear-gradient(180deg, rgba(22, 13, 9, 0.98) 0%, rgba(14, 8, 5, 1) 100%); border-top: 1px solid rgba(201, 164, 76, 0.35); }

@@ -573,119 +573,39 @@ main {
   left: 120%;
 }
 
-.compare-btn.is-selected {
-  border-color: rgba(62, 107, 111, 0.9);
-  box-shadow: 0 0 14px rgba(62, 107, 111, 0.34);
-}
 
-.compare-section {
-  margin-top: 1rem;
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  border-radius: 10px;
-  padding: 1rem;
-  background: linear-gradient(135deg, rgba(30, 20, 15, 0.8) 0%, rgba(15, 10, 5, 0.9) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: #e5d9c5;
-}
 
-.compare-head h2 {
-  font-family: 'IM Fell English SC', serif;
-  color: var(--gold);
-}
 
-.compare-head p {
-  margin-top: 0.3rem;
-  color: #c4d0da;
-}
 
-.compare-grid {
-  margin-top: 0.8rem;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.8rem;
-}
 
-.compare-slot {
-  border: 1px solid rgba(91, 107, 122, 0.45);
-  border-radius: 8px;
-  padding: 0.7rem;
-  background: rgba(6, 18, 28, 0.72);
-  transition: border-color 0.26s ease, transform 0.26s ease, box-shadow 0.26s ease;
-}
 
-.compare-slot:hover {
-  transform: translateY(-3px);
-  border-color: rgba(201, 164, 76, 0.48);
-  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.24);
-}
 
-.compare-slot.is-empty {
-  border-style: dashed;
-}
 
-.compare-slot h3 {
-  font-family: 'Cinzel', serif;
-  color: #dce4ea;
-  font-size: 0.88rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
 
-.compare-slot p {
-  margin-top: 0.3rem;
-  color: #aebdca;
-}
 
-.compare-power-list {
-  margin-top: 0.55rem;
-  display: grid;
-  gap: 0.5rem;
-}
 
-.compare-power-row {
-  display: grid;
-  gap: 0.2rem;
-}
 
-.compare-power-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.45rem;
-}
 
-.compare-power-label {
-  color: #d5e0e9;
-  font-family: 'Cinzel', serif;
-  font-size: 0.72rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
 
-.compare-power-value {
-  color: #f0ddb6;
-  font-size: 0.86rem;
-  font-weight: 600;
-}
 
-.compare-power-track {
-  height: 9px;
-  border: 1px solid rgba(91, 107, 122, 0.48);
-  border-radius: 999px;
-  background: rgba(8, 20, 32, 0.85);
-  overflow: hidden;
-}
 
-.compare-power-fill {
-  display: block;
-  height: 100%;
-  width: 0;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(62, 107, 111, 0.95) 0%, rgba(201, 164, 76, 0.95) 100%);
-  box-shadow: 0 0 10px rgba(62, 107, 111, 0.3);
-  animation: compareFillIn 0.7s ease-out forwards;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .ship-modal {
   position: fixed;
@@ -1057,9 +977,7 @@ footer {
     border-bottom: 1px solid rgba(62, 107, 111, 0.35);
   }
 
-  .compare-grid {
-    grid-template-columns: 1fr;
-  }
+  
 
   .footer-content {
     grid-template-columns: 1fr;

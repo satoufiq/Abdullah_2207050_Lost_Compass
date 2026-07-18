@@ -281,75 +281,7 @@ class ButtonInteractions {
 // ============================================
 // Parallax effect disabled as decorative elements moved to other sections
 
-// ============================================
-// Quote Rotation (Sliding Quotes)
-// ============================================
-
-class QuoteRotation {
-  constructor() {
-    this.quoteItems = document.querySelectorAll('.quote-item-v3');
-    this.quoteBackground = document.getElementById('quote-bg-v3');
-    this.currentQuote = 0;
-    this.quoteInterval = null;
-    
-    // Character background image mappings
-    this.characterImages = {
-      'Jack Sparrow': 'assets/images/home/jack sparrow.jpg',
-      'Davy Jones': 'assets/images/home/davy jones.jpeg',
-      'Barbossa': 'assets/images/home/barbosa.jpeg',
-      'Will Turner': 'assets/images/home/will turner.jpg',
-      'Elizabeth Swann': 'assets/images/home/elizabeth swan.jpg',
-    };
-
-    this.startQuoteRotation();
-  }
-
-  startQuoteRotation() {
-    if (this.quoteItems.length === 0) return;
-
-    // Set initial background
-    this.updateBackground();
-
-    // Rotate quotes every 8 seconds (8000ms)
-    this.quoteInterval = setInterval(() => {
-      this.nextQuote();
-    }, 8000);
-  }
-
-  updateBackground() {
-    const currentCharacter = this.quoteItems[this.currentQuote].getAttribute('data-character');
-    const imagePath = this.characterImages[currentCharacter];
-    
-    if (imagePath && this.quoteBackground) {
-      this.quoteBackground.style.backgroundImage = `url('${imagePath}')`;
-    }
-  }
-
-  nextQuote() {
-    // Remove active class and add exit animation to current quote
-    this.quoteItems[this.currentQuote].classList.remove('active');
-    this.quoteItems[this.currentQuote].classList.add('exit');
-
-    // Move to next quote
-    this.currentQuote = (this.currentQuote + 1) % this.quoteItems.length;
-
-    // Wait for exit animation, then show next quote
-    setTimeout(() => {
-      // Reset all quotes
-      this.quoteItems.forEach((item, index) => {
-        if (index === this.currentQuote) {
-          item.classList.remove('exit');
-          item.classList.add('active');
-        } else {
-          item.classList.remove('active', 'exit');
-        }
-      });
-      
-      // Update background for new quote
-      this.updateBackground();
-    }, 450);
-  }
-}
+// Quote Rotation logic is handled inline within home.blade.php
 
 // ============================================
 // HTML Layer Compass Spin (no CSS dependency)
@@ -432,17 +364,8 @@ class AuthButtons {
   }
 
   setupListeners() {
-    if (this.loginBtn) {
-      this.loginBtn.addEventListener('click', () => {
-        alert('Login feature coming soon!');
-      });
-    }
-
-    if (this.signupBtn) {
-      this.signupBtn.addEventListener('click', () => {
-        alert('Sign Up feature coming soon!');
-      });
-    }
+    // Auth features are now fully functional.
+    // 'Coming soon' alerts have been removed.
   }
 }
 
@@ -552,7 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Disabled custom cursor to fix lag - using regular browser cursor instead
   // const customCursor = new CustomCursor();
   const scrollAnimations = new ScrollAnimations();
-  const quoteRotation = new QuoteRotation();
+  // quoteRotation removed to prevent conflict with home.blade.php
   initHtmlCompassSpin();
 
   // Hide loading screen after 2 seconds

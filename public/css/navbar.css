@@ -17,7 +17,7 @@
 /* ─── Page-specific accent colours ─────────────────────────── */
 body.home-page       { --nav-accent: #c9a44c; --nav-accent-glow: rgba(201,164,76,0.4); }
 body.auth-page        { --nav-accent: #6ebfb5; --nav-accent-glow: rgba(110,191,181,0.35); }
-body.relics-page      { --nav-accent: #d48a35; --nav-accent-glow: rgba(212,138,53,0.4); }
+
 body.characters-page  { --nav-accent: #c44040; --nav-accent-glow: rgba(196,64,64,0.4); }
 body.ships-page       { --nav-accent: #4da8c9; --nav-accent-glow: rgba(77,168,201,0.35); }
 body.quiz-page        { --nav-accent: #9a5cd6; --nav-accent-glow: rgba(154,92,214,0.35); }

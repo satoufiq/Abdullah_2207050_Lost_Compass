@@ -1,7 +1,19 @@
 const FALLBACK_SHIP_IMAGE = 'assets/images/home/f9006df007e36bc5e6931a31ff420a9db7b1ef3da2ea876ebe9f7f26688bac76._SX1080_FMjpg_.jpg';
 
-// Base URL injected by Blade layout (supports XAMPP subpath like /lost-compass/public)
-const APP_BASE = window.APP_BASE || '';
+// Smart base URL detection: use window.APP_BASE if valid, else auto-detect from current URL
+(function detectAppBase() {
+  const injected = (window.APP_BASE || '').trim();
+  // Validate: injected value must match the current host
+  if (injected && window.location.href.startsWith(injected)) {
+    return; // already correct
+  }
+  // Auto-detect: find the path segment that contains our app entry point
+  const path = window.location.pathname; // e.g. /lost-compass/public/ships
+  const match = path.match(/^(.*?\/(?:public|index\.php))/);
+  window.APP_BASE = match ? (window.location.origin + match[1]) : window.location.origin;
+}());
+const APP_BASE = window.APP_BASE || window.location.origin;
+
 
 let ships = []; // Will be loaded from backend API
 
