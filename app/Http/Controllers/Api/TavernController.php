@@ -19,7 +19,7 @@ class TavernController extends Controller
      */
     public function getPosts()
     {
-        $posts = TavernPost::with(['user.pirateProfile', 'comments'])
+        $posts = TavernPost::with(['user.pirateProfile', 'comments.user.pirateProfile'])
             ->orderBy('created_at', 'desc')
             ->get()
             ->map(function ($post) {
@@ -41,7 +41,22 @@ class TavernController extends Controller
                     'time' => $post->created_at->diffForHumans(),
                     'replies' => $post->comments->count(),
                     'likes' => $post->likes_count,
-                    'has_liked' => Auth::check() ? $post->likes()->where('user_id', Auth::id())->exists() : false
+                    'has_liked' => Auth::check() ? $post->likes()->where('user_id', Auth::id())->exists() : false,
+                    'comments_data' => $post->comments->map(function ($comment) {
+                        $cAvatar = $comment->user->avatar_url;
+                        if (!$cAvatar) {
+                            $cAvatar = 'assets/images/tavern/avatars/avatar-02-captain.png';
+                        } else if (!filter_var($cAvatar, FILTER_VALIDATE_URL)) {
+                            $cAvatar = 'assets/images/avatars/' . $cAvatar;
+                        }
+                        return [
+                            'id' => $comment->id,
+                            'author' => $comment->user->pirateProfile->pirate_name ?? $comment->user->name,
+                            'avatar' => url($cAvatar),
+                            'message' => $comment->content,
+                            'time' => $comment->created_at->diffForHumans()
+                        ];
+                    })
                 ];
             });
 

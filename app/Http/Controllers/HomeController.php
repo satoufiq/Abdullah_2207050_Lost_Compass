@@ -21,7 +21,23 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // === EXPLICIT COOKIE MANAGEMENT (For Demonstration) ===
+        if (\Illuminate\Support\Facades\Auth::check()) {
+            // They are logged in
+            $cookieGreeting = \Illuminate\Support\Facades\Cookie::get('pirate_greeting', 'Welcome back to the seas, old friend!');
+            if (!\Illuminate\Support\Facades\Cookie::has('pirate_greeting')) {
+                \Illuminate\Support\Facades\Cookie::queue('pirate_greeting', 'Welcome back to the seas, old friend!', 60);
+            }
+        } else {
+            // They are NOT logged in
+            $cookieGreeting = \Illuminate\Support\Facades\Cookie::get('guest_greeting', 'First time here? Ahoy!');
+            if (!\Illuminate\Support\Facades\Cookie::has('guest_greeting')) {
+                \Illuminate\Support\Facades\Cookie::queue('guest_greeting', 'A new soul approaches the seas...', 60);
+            }
+        }
+
         $data = [
+            'cookieGreeting' => $cookieGreeting,
             'isLoggedIn' => false,
             'pirateName' => null,
             'pirateRank' => null,

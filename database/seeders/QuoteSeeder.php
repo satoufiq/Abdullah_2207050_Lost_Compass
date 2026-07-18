@@ -21,7 +21,7 @@ class QuoteSeeder extends Seeder
             [
                 'quote' => 'Do you fear death? Do you fear that dark abyss?',
                 'speaker' => 'Davy Jones',
-                'character_image' => null,
+                'character_image' => 'assets/images/characters/davy-jones.jpg',
             ],
             [
                 'quote' => 'The problem is not the problem. The problem is your attitude about the problem.',
@@ -31,7 +31,7 @@ class QuoteSeeder extends Seeder
             [
                 'quote' => 'One day you will find yourself lost. You will have nothing and nowhere to go.',
                 'speaker' => 'Will Turner',
-                'character_image' => null,
+                'character_image' => assets/images/home/will turner.jpg',
             ],
             [
                 'quote' => 'Gentlemen, milady... you will always remember this as the day you almost caught Captain Jack Sparrow.',
@@ -46,10 +46,10 @@ class QuoteSeeder extends Seeder
             [
                 'quote' => 'The seas may be rough, but I am the Captain! No matter how the wind howls, the mountain cannot bow to it.',
                 'speaker' => 'Elizabeth Swann',
-                'character_image' => null,
+                'character_image' => 'assets/images/home/elizabeth swann.jpg',
             ],
             [
-                'quote' => 'I got a jar of dirt! I got a jar of dirt! And guess what\'s inside it!',
+                'quote' => 'I got a jar of dirt! I got a jar of dirt! And guess what's inside it!',
                 'speaker' => 'Captain Jack Sparrow',
                 'character_image' => 'assets/images/home/new images/jack sparrow.jpg',
             ],
@@ -66,13 +66,9 @@ class QuoteSeeder extends Seeder
             [
                 'quote' => 'Life is cruel. Why should the afterlife be any different?',
                 'speaker' => 'Davy Jones',
-                'character_image' => null,
+                'character_image' => 'assets/images/home/davy-jones.jpg',
             ],
-            [
-                'quote' => 'The Dutchman must have a captain.',
-                'speaker' => 'Bootstrap Bill Turner',
-                'character_image' => null,
-            ],
+
         ];
 
         foreach ($quotes as $quote) {

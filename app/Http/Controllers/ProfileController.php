@@ -53,15 +53,12 @@ class ProfileController extends Controller
         if ($request->filled('search')) {
             $relicsQuery->where('name', 'like', '%' . $request->search . '%');
         }
-        if ($request->filled('category') && $request->category !== 'all') {
-            $relicsQuery->where('category_id', $request->category);
-        }
         if ($request->filled('rarity') && $request->rarity !== 'all') {
             $relicsQuery->where('rarity', $request->rarity);
         }
         
         $allRelics = $relicsQuery->get();
-        $categories = \App\Models\RelicCategory::all();
+        $categories = collect();
         $ownedRelicIds = $user->userRelics()->pluck('relic_id')->toArray();
         $missionHistory = $user->userMissions()->with('mission')->orderBy('updated_at', 'desc')->get();
         $userAchievements = \App\Models\UserAchievement::with('achievement')->where('user_id', $user->id)->get();
@@ -77,7 +74,7 @@ class ProfileController extends Controller
      */
     public function relicDetails($id)
     {
-        $relic = \App\Models\Relic::with('category')->findOrFail($id);
+        $relic = \App\Models\Relic::findOrFail($id);
         return response()->json([
             'relic_name' => $relic->name,
             'origin' => $relic->origin_location,
@@ -85,7 +82,7 @@ class ProfileController extends Controller
             'power' => $relic->power_description,
             'description' => $relic->description,
             'rarity' => $relic->rarity,
-            'category' => $relic->category->name ?? 'Unknown',
+            'category' => ucfirst($relic->rarity),
             'image' => $relic->image
         ]);
     }

@@ -52,7 +52,7 @@ class MissionEngineController extends Controller
     {
         $user = Auth::user();
         if (!$user) {
-            return response()->json([]);
+            return response()->json(['error' => 'Not authenticated'], 401);
         }
 
         $history = \App\Models\UserMission::with('mission')
@@ -179,8 +179,7 @@ class MissionEngineController extends Controller
             }
 
             // For logged-in users, validate the choice belongs to their current scene
-            // Allow a small grace: if the choice's scene_id matches either the saved scene
-            // OR the client-sent current_scene_id (handles race conditions)
+           
             $clientSceneId = $request->input('current_scene_id');
             $validScene = $choice->scene_id === $userMission->current_scene_id
                        || ($clientSceneId && $choice->scene_id === $clientSceneId);

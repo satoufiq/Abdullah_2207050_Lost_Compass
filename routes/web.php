@@ -108,6 +108,12 @@ Route::get('/api/tavern/rumors', [TavernController::class, 'getRumors']);
 Route::get('/api/tavern/notices', [TavernController::class, 'getNotices']);
 Route::get('/api/tavern/leaderboard', [TavernController::class, 'getLeaderboard']);
 
+// ─── Legends API ─────────────────────────────────────────────
+use App\Http\Controllers\Api\HallOfLegendsController;
+Route::get('/api/legends/leaderboard', [HallOfLegendsController::class, 'getLeaderboard']);
+Route::get('/api/legends/user-rank', [HallOfLegendsController::class, 'getUserRank']);
+Route::get('/api/legends/statistics', [HallOfLegendsController::class, 'getStatistics']);
+Route::get('/api/legends/hall-of-fame', [HallOfLegendsController::class, 'getHallOfFame']);
 // ─── Content Pages (Frontend-only) ───────────────────────────
 
 Route::get('/ships', function () {

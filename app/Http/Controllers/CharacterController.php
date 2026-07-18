@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CharacterController extends Controller
 {
     /**
-     * Display the Character Gallery page.
+     * Loads the quizzes for identity.
      */
     public function index()
     {
