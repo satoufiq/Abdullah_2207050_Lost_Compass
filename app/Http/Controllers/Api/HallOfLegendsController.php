@@ -76,7 +76,7 @@ class HallOfLegendsController extends Controller
             $emblem = $captain->emblem ?: 'assets/images/profile/emblems/skull-crossbones.png';
             if (!str_starts_with($emblem, 'assets') && !str_starts_with($emblem, 'http')) {
                 // Adjust if it's just a filename
-                $emblem = 'assets/images/profile/emblems/' . $emblem;
+                $emblem = 'assets/images/profile/avatars/' . $emblem;
             }
 
             return [
@@ -122,8 +122,12 @@ class HallOfLegendsController extends Controller
             ->leftJoin('user_achievements', 'users.id', '=', 'user_achievements.user_id')
             ->select(
                 'users.id',
+                DB::raw('COALESCE(MAX(user_rewards.reputation), 0) as reputation'),
+                DB::raw('COALESCE(MAX(user_rewards.gold), 0) as gold'),
+                DB::raw('COUNT(DISTINCT user_relics.id) as relics'),
                 DB::raw('(COALESCE(MAX(user_rewards.reputation), 0) * 2 + COUNT(DISTINCT user_missions.id) * 10 + COUNT(DISTINCT user_relics.id) * 15 + COUNT(DISTINCT user_achievements.id) * 20) as score')
             )
+            ->whereNotNull('users.pirate_name')
             ->groupBy('users.id');
 
         $allScores = $scoresQuery->get()->sortByDesc('score')->values();
@@ -135,6 +139,9 @@ class HallOfLegendsController extends Controller
         $userScoreData = $userRankIndex !== false ? $allScores[$userRankIndex] : null;
         $rank = $userRankIndex !== false ? $userRankIndex + 1 : '-';
         $score = $userScoreData ? (int) $userScoreData->score : 0;
+        $reputation = $userScoreData ? (int) $userScoreData->reputation : 0;
+        $relics = $userScoreData ? (int) $userScoreData->relics : 0;
+        $gold = $userScoreData ? (int) $userScoreData->gold : 0;
 
         $pointsNeeded = 0;
         $nextRankPoints = 0;
@@ -147,6 +154,9 @@ class HallOfLegendsController extends Controller
         return response()->json([
             'rank' => $rank,
             'score' => $score,
+            'reputation' => $reputation,
+            'relics' => $relics,
+            'gold' => $gold,
             'points_needed' => $pointsNeeded,
             'next_rank_points' => $nextRankPoints,
         ]);

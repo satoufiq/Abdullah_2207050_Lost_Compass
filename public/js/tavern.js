@@ -164,14 +164,37 @@ function setupDrinkButtons() {
     document.querySelectorAll('.btn-drink').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
-            const rumName = this.closest('.rum-card').querySelector('h4').textContent;
-            showTavernNotification(`You bought ${rumName}! 🍺`);
+            const rumCard = this.closest('.rum-card');
+            const rumName = rumCard.querySelector('h4').textContent;
+            // Parse price from string like "💰 50 Gold" -> 50
+            const priceText = rumCard.querySelector('.rum-price').textContent;
+            const price = parseInt(priceText.replace(/[^0-9]/g, ''), 10);
             
-            setTimeout(() => {
-                if (window.tavern && window.tavern.modals.buyRum) {
-                    window.tavern.closeModal(window.tavern.modals.buyRum);
+            fetch(`${window.APP_BASE || ''}/api/tavern/buy-drink`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
+                },
+                body: JSON.stringify({ drink_name: rumName, price: price })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showTavernNotification(`You bought ${rumName}! 🍺 (${data.new_gold} gold remaining)`);
+                    setTimeout(() => {
+                        if (window.tavern && window.tavern.modals.buyRum) {
+                            window.tavern.closeModal(window.tavern.modals.buyRum);
+                        }
+                    }, 800);
+                } else if (data.error) {
+                    showTavernNotification(data.error + ' ⚠️');
                 }
-            }, 800);
+            })
+            .catch(err => {
+                console.error('Error buying drink:', err);
+                showTavernNotification('Action failed. Are you logged in? ⚠️');
+            });
         });
     });
 }

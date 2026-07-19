@@ -1436,14 +1436,14 @@ body::after {
                         ⚓ {{ $ctaText }}
                     </a>
                     <a href="{{ url('/profile') }}" class="btn btn-secondary" id="view-profile-btn" style="text-decoration:none;">
-                        🧭 Captain's Cabin
+                        Captain's Cabin
                     </a>
                 @else
                     <a href="{{ $ctaLink }}" class="btn btn-primary" id="begin-voyage-btn" style="text-decoration:none;">
-                        ⚓ {{ $ctaText }}
+                         {{ $ctaText }}
                     </a>
                     <a href="{{ url('/quiz') }}" class="btn btn-secondary" id="discover-fate-btn" style="text-decoration:none;">
-                        🔮 Explore the Seas
+                         Explore the Seas
                     </a>
                 @endif
             </div>
@@ -1460,22 +1460,22 @@ body::after {
     <div class="stats-bar" id="stats-bar">
         <div class="stats-inner">
             <div class="stat-item">
-                <div class="stat-icon">🏴‍☠️</div>
-                <div class="stat-number" data-count="12">12</div>
-                <div class="stat-label">Legendary Captains</div>
+                <div class="stat-icon"></div>
+                <div class="stat-number" data-count="21">21</div>
+                <div class="stat-label">Legends of the Sea</div>
             </div>
             <div class="stat-item">
-                <div class="stat-icon">⛵</div>
+                <div class="stat-icon"></div>
                 <div class="stat-number" data-count="8">8</div>
                 <div class="stat-label">Iconic Ships</div>
             </div>
             <div class="stat-item">
-                <div class="stat-icon">⚔️</div>
+                <div class="stat-icon"></div>
                 <div class="stat-number" data-count="6">6</div>
                 <div class="stat-label">Adventurous Missions</div>
             </div>
             <div class="stat-item">
-                <div class="stat-icon">🗺️</div>
+                <div class="stat-icon"></div>
                 <div class="stat-number" data-count="6">6</div>
                 <div class="stat-label">Charted Territories</div>
             </div>

@@ -106,6 +106,7 @@ Route::post('/api/tavern/posts/{id}/reply', [TavernController::class, 'createCom
 Route::post('/api/tavern/posts/{id}/like', [TavernController::class, 'toggleLike']);
 Route::get('/api/tavern/rumors', [TavernController::class, 'getRumors']);
 Route::get('/api/tavern/notices', [TavernController::class, 'getNotices']);
+Route::post('/api/tavern/buy-drink', [TavernController::class, 'buyDrink']);
 Route::get('/api/tavern/leaderboard', [TavernController::class, 'getLeaderboard']);
 
 // ─── Legends API ─────────────────────────────────────────────

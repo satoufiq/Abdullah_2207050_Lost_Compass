@@ -7,7 +7,7 @@
 @section('use_base_css', true)
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/tavern.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tavern.css?v=' . time()) }}">
 @endsection
 
 @section('content')
@@ -93,27 +93,7 @@
         </div>
     </section>
 
-    {{-- Leaderboard Section --}}
-    <section class="leaderboard-section" id="leaderboard-section">
-        <div class="leaderboard-container">
-            <h2 class="section-title">👑 Top Captains This Week</h2>
-            <p class="section-subtitle">The most fearless and legendary...</p>
-
-            <div class="leaderboard-table">
-                <div class="leaderboard-header">
-                    <div class="rank-col">Rank</div>
-                    <div class="captain-col">Captain Name</div>
-                    <div class="reputation-col">Reputation</div>
-                    <div class="missions-col">Missions</div>
-                    <div class="relics-col">Relics Owned</div>
-                </div>
-
-                <div id="leaderboard-body">
-                    <!-- Leaderboard entries injected via JS -->
-                </div>
-            </div>
-        </div>
-    </section>
+   
 
     {{-- Tavern Interactions Modals --}}
     <div id="buy-rum-modal" class="modal">
@@ -208,5 +188,5 @@
 @section('use_base_js', true)
 
 @section('scripts')
-    <script src="{{ asset('js/tavern.js?v=3') }}"></script>
+    <script src="{{ asset('js/tavern.js?v=' . time()) }}"></script>
 @endsection

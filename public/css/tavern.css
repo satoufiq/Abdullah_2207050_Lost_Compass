@@ -84,11 +84,10 @@ body.tavern-page .nav-menu a.active {
    ============================================ */
 .tavern-hero {
     position: relative;
-    height: 90vh;
+    min-height: 90vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
     padding-top: 80px;
 }
 
@@ -257,6 +256,7 @@ body.tavern-page .nav-menu a.active {
 
 /* Modals */
 .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 99999; backdrop-filter: blur(5px); }
+.modal.active { display: block; }
 .modal-content.tavern-modal {
     background: var(--tavern-wood);
     border: 2px solid var(--tavern-warm-gold);

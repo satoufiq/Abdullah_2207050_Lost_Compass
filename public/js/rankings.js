@@ -110,7 +110,13 @@ class LegendsLeaderboard {
               // Only update if elements exist (in case user isn't logged in properly or DOM changed)
               const repEl = document.getElementById('user-spotlight-rep');
               if (repEl) {
-                  repEl.textContent = data.score.toLocaleString();
+                  repEl.textContent = data.reputation.toLocaleString(); // using reputation to match the label
+                  
+                  const relicsEl = document.getElementById('user-spotlight-relics');
+                  if (relicsEl) relicsEl.textContent = `${data.relics} / 18`;
+                  
+                  const goldEl = document.getElementById('user-spotlight-gold');
+                  if (goldEl) goldEl.textContent = data.gold.toLocaleString();
                   
                   document.getElementById('user-rank-badge').textContent = `Rank #${data.rank}`;
                   

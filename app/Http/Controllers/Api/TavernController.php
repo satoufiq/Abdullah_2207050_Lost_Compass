@@ -251,6 +251,42 @@ class TavernController extends Controller
     }
 
     /**
+     * Buy a drink at the tavern.
+     */
+    public function buyDrink(Request $request)
+    {
+        if (!Auth::check()) {
+            return response()->json(['error' => 'You must be logged in to buy drinks.'], 401);
+        }
+
+        $request->validate([
+            'drink_name' => 'required|string',
+            'price' => 'required|integer|min:0'
+        ]);
+
+        $userId = Auth::id();
+        $reward = UserReward::firstOrCreate(
+            ['user_id' => $userId],
+            ['gold' => 0, 'reputation' => 0, 'relics' => []]
+        );
+
+        if ($reward->gold < $request->price) {
+            return response()->json(['error' => 'Not enough gold! You need ' . $request->price . ' coins.'], 400);
+        }
+
+        $reward->decrement('gold', $request->price);
+        
+        // Give a little reputation for spending money at the tavern
+        $this->updateReputation($userId, 1);
+
+        return response()->json([
+            'success' => true, 
+            'message' => 'You bought ' . $request->drink_name . '!',
+            'new_gold' => $reward->fresh()->gold
+        ]);
+    }
+
+    /**
      * Helper method to update reputation and recalculate rank.
      */
     private function updateReputation($userId, $amount)
