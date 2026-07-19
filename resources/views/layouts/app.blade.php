@@ -26,6 +26,65 @@
 </head>
 <body @hasSection('body_class') class="@yield('body_class')" @endif @hasSection('body_attributes') @yield('body_attributes') @endif>
 
+    {{-- Global Flash Messages (For Middlewares & Actions) --}}
+    @if(session('success') || session('error'))
+        <div id="flash-message" class="global-flash-message {{ session('success') ? 'flash-success' : 'flash-error' }}">
+            {{ session('success') ?? session('error') }}
+            <button onclick="document.getElementById('flash-message').style.display='none'">&times;</button>
+        </div>
+        <style>
+            .global-flash-message {
+                position: fixed;
+                top: 85px; /* Below the navbar */
+                right: 20px;
+                z-index: 100000;
+                padding: 12px 20px;
+                border-radius: 6px;
+                font-family: 'Cinzel', serif;
+                font-weight: 600;
+                font-size: 0.9rem;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.8);
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                animation: slideInRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), fadeOutDown 0.5s ease-in 5s forwards;
+            }
+            .flash-success {
+                background: linear-gradient(135deg, rgba(20,40,20,0.95), rgba(10,20,10,0.98));
+                border: 1px solid #4ade80;
+                color: #4ade80;
+                box-shadow: 0 0 15px rgba(74, 222, 128, 0.2);
+            }
+            .flash-error {
+                background: linear-gradient(135deg, rgba(50,15,15,0.95), rgba(25,10,10,0.98));
+                border: 1px solid #f87171;
+                color: #f87171;
+                box-shadow: 0 0 15px rgba(248, 113, 113, 0.2);
+            }
+            .global-flash-message button {
+                background: none;
+                border: none;
+                color: inherit;
+                font-size: 1.3rem;
+                cursor: pointer;
+                opacity: 0.7;
+                padding: 0;
+                line-height: 1;
+            }
+            .global-flash-message button:hover {
+                opacity: 1;
+            }
+            @keyframes slideInRight {
+                from { transform: translateX(120%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes fadeOutDown {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(20px); visibility: hidden; }
+            }
+        </style>
+    @endif
+
     @yield('content')
     {{ $slot ?? '' }}
 
