@@ -316,10 +316,25 @@ class MissionEngineController extends Controller
             }
         }
 
-        $userMission->update(['status' => 'completed', 'reward_claimed' => true]);
-
         // Check & unlock any newly earned achievements
         $unlockedAchievements = $this->checkAndGrantAchievements($user);
+
+        // GUARANTEE: If a mission completes but gave no relic and no achievement, force a random relic drop!
+        if (empty($grantedRelics) && empty($unlockedAchievements)) {
+            $ownedIds = UserRelic::where('user_id', $user->id)->pluck('relic_id')->toArray();
+            $fallbackRelic = Relic::whereNotIn('id', $ownedIds)->inRandomOrder()->first();
+            
+            if ($fallbackRelic) {
+                UserRelic::create([
+                    'user_id'       => $user->id,
+                    'relic_id'      => $fallbackRelic->id,
+                    'acquired_date' => now(),
+                ]);
+                $grantedRelics[] = $fallbackRelic;
+            }
+        }
+
+        $userMission->update(['status' => 'completed', 'reward_claimed' => true]);
 
         return response()->json([
             'success' => true,

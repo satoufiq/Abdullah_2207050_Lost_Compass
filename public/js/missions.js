@@ -343,7 +343,7 @@ function showLootOverlay(gained) {
     if (gained.gold) {
         els.lootItems.innerHTML += `
             <div class="ms-loot-item">
-                <div class="ms-loot-item__icon"><img src="${APP_BASE}/assets/images/map/gold_coins.png" alt="Gold"></div>
+                <div class="ms-loot-item__icon"><img src="${APP_BASE}/assets/images/profile/icons/icon-gold-coin.png" alt="Gold"></div>
                 <h4 class="ms-loot-item__val">+${gained.gold}</h4>
                 <p class="ms-loot-item__label">Gold Pieces</p>
             </div>
@@ -354,7 +354,7 @@ function showLootOverlay(gained) {
     if (gained.reputation) {
         els.lootItems.innerHTML += `
             <div class="ms-loot-item">
-                <div class="ms-loot-item__icon"><img src="${APP_BASE}/assets/images/map/compass_rose.png" alt="Reputation"></div>
+                <div class="ms-loot-item__icon"><img src="${APP_BASE}/assets/images/map/compass%20rose.png" alt="Reputation"></div>
                 <h4 class="ms-loot-item__val">+${gained.reputation}</h4>
                 <p class="ms-loot-item__label">Reputation</p>
             </div>
@@ -364,7 +364,13 @@ function showLootOverlay(gained) {
     // Add Relics
     if (gained.relics && gained.relics.length > 0) {
         gained.relics.forEach(relic => {
-            const imgSrc = relic.image ? (relic.image.startsWith('http') || relic.image.startsWith('/') ? relic.image : '/' + relic.image) : `${APP_BASE}/assets/images/profile/relics/relic-default.png`;
+            let imagePath = relic.image || 'relic-default.png';
+            if (!imagePath.includes('/') && !imagePath.startsWith('http')) {
+                imagePath = `assets/images/profile/relics/${imagePath}`;
+            }
+            const cleanPath = imagePath.startsWith('/') ? imagePath.substring(1) : imagePath;
+            const imgSrc = imagePath.startsWith('http') ? imagePath : `${APP_BASE}/${cleanPath}`;
+            
             els.lootItems.innerHTML += `
                 <div class="ms-loot-item">
                     <div class="ms-loot-item__icon"><img src="${imgSrc}" alt="${relic.name}"></div>
@@ -378,7 +384,13 @@ function showLootOverlay(gained) {
     // Add Achievements
     if (gained.achievements && gained.achievements.length > 0) {
         gained.achievements.forEach(ach => {
-            const imgSrc = ach.icon ? (ach.icon.startsWith('http') || ach.icon.startsWith('/') ? ach.icon : '/' + ach.icon) : `${APP_BASE}/assets/images/profile/achievements/badge-default.png`;
+            let iconPath = ach.icon || 'badge-default.png';
+            if (!iconPath.includes('/') && !iconPath.startsWith('http')) {
+                iconPath = `assets/images/profile/achievements/${iconPath}`;
+            }
+            const cleanPath = iconPath.startsWith('/') ? iconPath.substring(1) : iconPath;
+            const imgSrc = iconPath.startsWith('http') ? iconPath : `${APP_BASE}/${cleanPath}`;
+            
             els.lootItems.innerHTML += `
                 <div class="ms-loot-item" style="border-color: #f0c030;">
                     <div class="ms-loot-item__icon"><img src="${imgSrc}" alt="${ach.title}"></div>
